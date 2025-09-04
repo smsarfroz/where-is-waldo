@@ -1,0 +1,21 @@
+ol li{
+  list-style-type: none;
+  color: blue;
+}
+
+.dropdown {
+    border: 2px solid black;
+    width: 70px;
+}
+
+.option {
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.option:hover {
+    background-color: rgb(244, 244, 244);
+    cursor: pointer;
+}

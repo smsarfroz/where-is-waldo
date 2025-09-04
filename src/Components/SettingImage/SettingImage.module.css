@@ -1,6 +1,6 @@
 .Image {
     border: 2px solid black;
-    color: aqua;
-    height: 100px;
-    width: 100px;
+    height: 500px;
+    width: 500px;
+    cursor: pointer;
 }
