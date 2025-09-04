@@ -3,7 +3,11 @@ ol li{
   color: blue;
 }
 
+.box {
+    position: absolute;
+}
 .dropdown {
+    position: absolute;
     border: 2px solid black;
     width: 70px;
 }
