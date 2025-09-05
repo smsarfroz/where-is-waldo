@@ -57,7 +57,7 @@ function SettingImage() {
 
   return (
     <div ref={mouseClickRef} onClick={handleClick} className={styles.Image}>
-      <Selector style={styleSelector} style2={style2} />
+      <Selector style={styleSelector} style2={style2} className={styles.box}/>
     </div>
   );
 }

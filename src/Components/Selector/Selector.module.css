@@ -5,6 +5,7 @@ ol li{
 
 .box {
     position: absolute;
+    pointer-events: none;
 }
 .dropdown {
     position: absolute;

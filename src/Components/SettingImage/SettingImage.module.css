@@ -1,8 +1,12 @@
+.box {
+  /* pointer-events: none; */
+}
 .Image {
     border: 2px solid black;
     height: 500px;
     width: 500px;
     cursor: pointer;
+    /* pointer-events: none; */
 }
 *, *::before, *::after {
   box-sizing: border-box;
