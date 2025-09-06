@@ -6,14 +6,20 @@ const width = 500;
 const height = 500;
 const size = 20;
 
+const VITE_BASE_URL =  import.meta.env.VITE_BASE_URL || '/api';
+
 function SettingImage() {
   const mouseClickRef = useRef(null);
   const [coordx, setCoordx] = useState(null);
   const [coordy, setCoordy] = useState(null);
   const [left, setLeft] = useState(true);
   const [up, setUp] = useState(true);
+  const [option, setOption] = useState(null);
+  const [showSelector, setShowSelector] = useState(false);
 
-  const handleClick = (event) => {
+  console.log('option: ', option);
+  function handleClick(event) {
+    setShowSelector(true);
     if (mouseClickRef.current) {
       const rect = mouseClickRef.current.getBoundingClientRect();
       const x = event.clientX - rect.x;
@@ -36,8 +42,40 @@ function SettingImage() {
       } else {
         setUp(true);
       }
+
+      let data = {};
+      data["option"] = option;
+      data["x-coordinate"] =coordx; 
+      data["y-coordinate"] =coordy; 
+
+      console.log("data: ", data);
+      if (option) {
+        setShowSelector(false);
+        // fetch((`${VITE_BASE_URL}/play/1/verify/1`), {
+        //   mode: 'cors',
+        //   method: 'post',
+        //   headers: {
+        //     "Content-Type": "application/json"
+        //   },
+        //   body: JSON.stringify(data)
+        // })
+        // .then((response) => {
+        //   if (!response.ok) {
+        //     throw new Error(`HTTP error! status: ${response.status}`);
+        //   }
+        //   return response.json();
+        // })
+        // .then((response) => {
+        //   // display verification status to the user
+        //   console.log(`verification successfull`);
+        // })
+        // .catch(error => {
+        //   console.error(`There was a problem with the fetch operation: `, error);
+        // })
+        setOption(null);
+      }
     }
-  };
+  }
     
   const styleSelector = {
     backgroundColor: "red",
@@ -57,7 +95,13 @@ function SettingImage() {
 
   return (
     <div ref={mouseClickRef} onClick={handleClick} className={styles.Image}>
-      <Selector style={styleSelector} style2={style2} className={styles.box}/>
+      {
+        showSelector ? (
+
+          <Selector style={styleSelector} style2={style2} className={styles.box} setOption={setOption}/>
+
+        ) : null
+      }
     </div>
   );
 }
