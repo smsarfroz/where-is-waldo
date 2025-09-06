@@ -15,7 +15,7 @@ function SettingImage() {
   const [left, setLeft] = useState(true);
   const [up, setUp] = useState(true);
   const [option, setOption] = useState(null);
-  const [showSelector, setShowSelector] = useState(false);
+  const [showSelector, setShowSelector] = useState(true);
 
   console.log('option: ', option);
   function handleClick(event) {
@@ -43,14 +43,19 @@ function SettingImage() {
         setUp(true);
       }
 
+      // console.log('coordx, width :', coordx/width);
+      // console.log('coordy, height :', coordy/height);
+      const xpercent = (coordx / width) * 100;
+      const ypercent = (coordy / height) * 100;
+
       let data = {};
       data["option"] = option;
-      data["x-coordinate"] =coordx; 
-      data["y-coordinate"] =coordy; 
+      data["x-percent"] =xpercent; 
+      data["y-percent"] =ypercent; 
 
       console.log("data: ", data);
       if (option) {
-        setShowSelector(false);
+        // setShowSelector(false);
         // fetch((`${VITE_BASE_URL}/play/1/verify/1`), {
         //   mode: 'cors',
         //   method: 'post',
@@ -72,7 +77,7 @@ function SettingImage() {
         // .catch(error => {
         //   console.error(`There was a problem with the fetch operation: `, error);
         // })
-        setOption(null);
+        // setOption(null);
       }
     }
   }
