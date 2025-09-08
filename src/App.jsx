@@ -9,7 +9,6 @@ function App() {
   
   return (
     <>
-      <p>Hi!</p>
       <SettingImage />
     </>
   )

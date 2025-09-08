@@ -2,8 +2,8 @@ import { useRef } from "react";
 import { useState } from "react";
 import styles from "./SettingImage.module.css";
 import Selector from "../Selector/Selector.jsx";
-const width = 500;
-const height = 500;
+const width = 1200;
+const height = 700;
 const size = 20;
 
 const VITE_BASE_URL =  import.meta.env.VITE_BASE_URL || '/api';
@@ -17,7 +17,6 @@ function SettingImage() {
   const [option, setOption] = useState(null);
   const [showSelector, setShowSelector] = useState(true);
 
-  console.log('option: ', option);
   function handleClick(event) {
     setShowSelector(true);
     if (mouseClickRef.current) {
@@ -43,50 +42,49 @@ function SettingImage() {
         setUp(true);
       }
 
-      // console.log('coordx, width :', coordx/width);
-      // console.log('coordy, height :', coordy/height);
+      // console.log('coordx, width :', coordx, width, coordx/width);
+      // console.log('coordy, height :', coordy, height, coordy/height);
       const xpercent = (coordx / width) * 100;
       const ypercent = (coordy / height) * 100;
 
       let data = {};
       data["option"] = option;
-      data["x-percent"] =xpercent; 
-      data["y-percent"] =ypercent; 
+      data["x-percent"] = xpercent; 
+      data["y-percent"] = ypercent; 
 
       console.log("data: ", data);
       if (option) {
         // setShowSelector(false);
-        // fetch((`${VITE_BASE_URL}/play/1/verify/1`), {
-        //   mode: 'cors',
-        //   method: 'post',
-        //   headers: {
-        //     "Content-Type": "application/json"
-        //   },
-        //   body: JSON.stringify(data)
-        // })
-        // .then((response) => {
-        //   if (!response.ok) {
-        //     throw new Error(`HTTP error! status: ${response.status}`);
-        //   }
-        //   return response.json();
-        // })
-        // .then((response) => {
-        //   // display verification status to the user
-        //   console.log(`verification successfull`);
-        // })
-        // .catch(error => {
-        //   console.error(`There was a problem with the fetch operation: `, error);
-        // })
+        fetch((`${VITE_BASE_URL}/play/0/verify/0`), {
+          mode: 'cors',
+          method: 'post',
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(data)
+        })
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+          return response.json();
+        })
+        .then((response) => {
+          // display verification status to the user
+          console.log(`verification successfull`);
+        })
+        .catch(error => {
+          console.error(`There was a problem with the fetch operation: `, error);
+        })
         // setOption(null);
       }
     }
   }
     
   const styleSelector = {
-    backgroundColor: "red",
     transform: `translate(-50%, -50%) translate(${coordx}px, ${coordy}px)`,
   };
-  console.log(left, up);
+  // console.log(left, up);
   const style2 = {
     backgroundColor: "blue",
     transform: `
