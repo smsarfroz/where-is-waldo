@@ -21,7 +21,7 @@ function SettingImage() {
     setShowSelector(true);
     if (mouseClickRef.current) {
       const rect = mouseClickRef.current.getBoundingClientRect();
-      const x = event.clientX - rect.x;
+      const x = event.clientX - rect.x; 
       const y = event.clientY - rect.y;
 
       console.log(`Click coordinates relative to element: X=${x}, Y=${y}`);
@@ -44,13 +44,13 @@ function SettingImage() {
 
       // console.log('coordx, width :', coordx, width, coordx/width);
       // console.log('coordy, height :', coordy, height, coordy/height);
-      const xpercent = (coordx / width) * 100;
-      const ypercent = (coordy / height) * 100;
+      const xpercent = (x / width) * 100;
+      const ypercent = (y / height) * 100;
 
       let data = {};
       data["option"] = option;
-      data["x-percent"] = xpercent; 
-      data["y-percent"] = ypercent; 
+      data["xpercent"] = xpercent; 
+      data["ypercent"] = ypercent; 
 
       console.log("data: ", data);
       if (option) {
@@ -67,6 +67,7 @@ function SettingImage() {
           if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
           }
+          console.log('response ', response);
           return response.json();
         })
         .then((response) => {
