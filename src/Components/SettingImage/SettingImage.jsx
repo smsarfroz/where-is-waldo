@@ -6,7 +6,7 @@ const width = 1200;
 const height = 700;
 const size = 20;
 
-const VITE_BASE_URL =  import.meta.env.VITE_BASE_URL || '/api';
+const VITE_BASE_URL = import.meta.env.VITE_BASE_URL || "/api";
 
 function SettingImage() {
   const mouseClickRef = useRef(null);
@@ -15,19 +15,24 @@ function SettingImage() {
   const [left, setLeft] = useState(true);
   const [up, setUp] = useState(true);
   const [option, setOption] = useState(null);
-  const [showSelector, setShowSelector] = useState(true);
+  const [showSelector, setShowSelector] = useState(false);
+
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState(null);
 
   function handleClick(event) {
-    setShowSelector(true);
-    if (mouseClickRef.current) {
+    console.log("Click");
+    console.log("option ", option);
+    console.log("selector", showSelector);
+    if (mouseClickRef.current && !option) {
+      setShowSelector(true);
       const rect = mouseClickRef.current.getBoundingClientRect();
-      const x = event.clientX - rect.x; 
+      const x = event.clientX - rect.x;
       const y = event.clientY - rect.y;
 
       console.log(`Click coordinates relative to element: X=${x}, Y=${y}`);
       setCoordx(x);
-      setCoordy(y); 
-      //   console.log('coordx, coordy: ', coordx, coordy); 
+      setCoordy(y);
       const rightSide = width - x;
       const lowerSide = height - y;
 
@@ -42,70 +47,93 @@ function SettingImage() {
         setUp(true);
       }
 
-      // console.log('coordx, width :', coordx, width, coordx/width);
-      // console.log('coordy, height :', coordy, height, coordy/height);
       const xpercent = (x / width) * 100;
       const ypercent = (y / height) * 100;
 
       let data = {};
       data["option"] = option;
-      data["xpercent"] = xpercent; 
-      data["ypercent"] = ypercent; 
+      data["xpercentu"] = xpercent;
+      data["ypercentu"] = ypercent;
 
       console.log("data: ", data);
       if (option) {
-        // setShowSelector(false);
-        fetch((`${VITE_BASE_URL}/play/0/verify/0`), {
-          mode: 'cors',
-          method: 'post',
+        fetch(`${VITE_BASE_URL}/play/0/verify/0`, {
+          mode: "cors",
+          method: "post",
           headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
           },
-          body: JSON.stringify(data)
+          body: JSON.stringify(data),
         })
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-          }
-          console.log('response ', response);
-          return response.json();
-        })
-        .then((response) => {
-          // display verification status to the user
-          console.log(`verification successfull`);
-        })
-        .catch(error => {
-          console.error(`There was a problem with the fetch operation: `, error);
-        })
-        // setOption(null);
+          .then((response) => {
+            setShowSelector(false);
+            setLoading(true);
+            if (!response.ok) {
+              throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            console.log("response ", response);
+            return response.json();
+          })
+          .then((response) => {
+            console.log("response.message ", response.message);
+            console.log(`verification successfull`);
+            setLoading(false);
+            setMessage("Your pick is correct!");
+          })
+          .catch((error) => {
+            setLoading(false);
+            setMessage("Incorrect Pick");
+            console.error(
+              `There was a problem with the fetch operation: `,
+              error
+            );
+          });
       }
     }
   }
-    
+
   const styleSelector = {
     transform: `translate(-50%, -50%) translate(${coordx}px, ${coordy}px)`,
   };
-  // console.log(left, up);
   const style2 = {
     backgroundColor: "blue",
     transform: `
-      ${left ? `translate(-100%, 0) ` : ' '}
-      ${up ? `translate(0, -100%) ` : ' '}
-      translate(${coordx + size/2}px, ${coordy + size/2}px) 
-      ${left ? `translateX(${-size  }px) ` : ` `} 
-      ${up ? `translateY(${-size  }px) ` : ` `}
+      ${left ? `translate(-100%, 0) ` : " "}
+      ${up ? `translate(0, -100%) ` : " "}
+      translate(${coordx + size / 2}px, ${coordy + size / 2}px) 
+      ${left ? `translateX(${-size}px) ` : ` `} 
+      ${up ? `translateY(${-size}px) ` : ` `}
       `,
   };
 
   return (
     <div ref={mouseClickRef} onClick={handleClick} className={styles.Image}>
-      {
+      {(() => {
+        if (loading) {
+          return <p>Loading...</p>;
+        } else if (message) {
+          setTimeout(() => {
+            setMessage(null);
+          }, 2000);
+          return <p>{message}</p>;
+        } else {
+          return (
+            <Selector
+              style={styleSelector}
+              style2={style2}
+              className={styles.box}
+              setOption={setOption}
+            />
+          );
+        }
+      })()}
+      {/* {
         showSelector ? (
 
           <Selector style={styleSelector} style2={style2} className={styles.box} setOption={setOption}/>
 
         ) : null
-      }
+      } */}
     </div>
   );
 }
