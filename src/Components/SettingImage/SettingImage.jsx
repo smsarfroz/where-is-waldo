@@ -22,10 +22,7 @@ const useFetch = (coordx, coordy) => {
     data["xpercentu"] = xpercent;
     data["ypercentu"] = ypercent;
 
-    console.log("data ", data);
-    if (option) {
-
-      console.log("sending a fetch request meaning option value is there");
+    if (option && option != 'Cancel') {
       fetch(`${VITE_BASE_URL}/play/0/verify/0`, {
         mode: "cors",
         method: "post",
@@ -35,7 +32,6 @@ const useFetch = (coordx, coordy) => {
         body: JSON.stringify(data),
       })
         .then((response) => {
-          // setShowSelector(false);
           setLoading(true);
           if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
@@ -56,6 +52,8 @@ const useFetch = (coordx, coordy) => {
             error
           );
         });
+    } else if (option == 'Cancel') {
+      setOption(null);
     }
   }, [option, coordx, coordy]);
   return { loading, message, option, setMessage, setOption };
@@ -71,10 +69,7 @@ function SettingImage() {
   const [showSelector, setShowSelector] = useState(false);
 
   const {loading, message, option, setMessage, setOption} = useFetch(coordx, coordy);
-
   function handleClick(event) {
-    console.log("value of option on click", option);
-    console.log(mouseClickRef.current && !option);
     if (mouseClickRef.current && !option) {
       setShowSelector(true);
       const rect = mouseClickRef.current.getBoundingClientRect();
@@ -137,13 +132,6 @@ function SettingImage() {
           );
         }
       })()}
-      {/* {
-        showSelector ? (
-
-          <Selector style={styleSelector} style2={style2} className={styles.box} setOption={setOption}/>
-
-        ) : null
-      } */}
     </div>
   );
 }

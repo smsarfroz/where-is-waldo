@@ -7,7 +7,6 @@ const Selector = ({style, style2, setOption, setShowSelector}) => {
         setOption(e.target.dataset.value);
         e.stopPropagation();
         setShowSelector(false);
-        console.log("setting showSelector as false");
     }
 
     return (
