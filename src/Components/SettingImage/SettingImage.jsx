@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { useState } from "react";
 import styles from "./SettingImage.module.css";
 import Selector from "../Selector/Selector.jsx";
@@ -8,29 +8,79 @@ const size = 20;
 
 const VITE_BASE_URL = import.meta.env.VITE_BASE_URL || "/api";
 
+const useFetch = (coordx, coordy) => {
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState(null);
+  const [option, setOption] = useState(null);
+
+  useEffect(() => {
+    const xpercent = (coordx / width) * 100;
+    const ypercent = (coordy / height) * 100;
+
+    let data = {};
+    data["option"] = option;
+    data["xpercentu"] = xpercent;
+    data["ypercentu"] = ypercent;
+
+    console.log("data ", data);
+    if (option) {
+
+      console.log("sending a fetch request meaning option value is there");
+      fetch(`${VITE_BASE_URL}/play/0/verify/0`, {
+        mode: "cors",
+        method: "post",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      })
+        .then((response) => {
+          // setShowSelector(false);
+          setLoading(true);
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+          return response.json();
+        })
+        .then((response) => {
+          setLoading(false);
+          setMessage(response.message);
+          setOption(null);
+        })
+        .catch((error) => {
+          setLoading(false);
+          setMessage(null);
+          setOption(null);
+          console.error(
+            `There was a problem with the fetch operation: `,
+            error
+          );
+        });
+    }
+  }, [option, coordx, coordy]);
+  return { loading, message, option, setMessage, setOption };
+};
+
 function SettingImage() {
   const mouseClickRef = useRef(null);
   const [coordx, setCoordx] = useState(null);
   const [coordy, setCoordy] = useState(null);
   const [left, setLeft] = useState(true);
   const [up, setUp] = useState(true);
-  const [option, setOption] = useState(null);
+  
   const [showSelector, setShowSelector] = useState(false);
 
-  const [loading, setLoading] = useState(false);
-  const [message, setMessage] = useState(null);
+  const {loading, message, option, setMessage, setOption} = useFetch(coordx, coordy);
 
   function handleClick(event) {
-    console.log("Click");
-    console.log("option ", option);
-    console.log("selector", showSelector);
+    console.log("value of option on click", option);
+    console.log(mouseClickRef.current && !option);
     if (mouseClickRef.current && !option) {
       setShowSelector(true);
       const rect = mouseClickRef.current.getBoundingClientRect();
       const x = event.clientX - rect.x;
       const y = event.clientY - rect.y;
 
-      console.log(`Click coordinates relative to element: X=${x}, Y=${y}`);
       setCoordx(x);
       setCoordy(y);
       const rightSide = width - x;
@@ -45,50 +95,8 @@ function SettingImage() {
         setUp(false);
       } else {
         setUp(true);
-      }
-
-      const xpercent = (x / width) * 100;
-      const ypercent = (y / height) * 100;
-
-      let data = {};
-      data["option"] = option;
-      data["xpercentu"] = xpercent;
-      data["ypercentu"] = ypercent;
-
-      console.log("data: ", data);
-      if (option) {
-        fetch(`${VITE_BASE_URL}/play/0/verify/0`, {
-          mode: "cors",
-          method: "post",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(data),
-        })
-          .then((response) => {
-            setShowSelector(false);
-            setLoading(true);
-            if (!response.ok) {
-              throw new Error(`HTTP error! status: ${response.status}`);
-            }
-            console.log("response ", response);
-            return response.json();
-          })
-          .then((response) => {
-            console.log("response.message ", response.message);
-            console.log(`verification successfull`);
-            setLoading(false);
-            setMessage("Your pick is correct!");
-          })
-          .catch((error) => {
-            setLoading(false);
-            setMessage("Incorrect Pick");
-            console.error(
-              `There was a problem with the fetch operation: `,
-              error
-            );
-          });
-      }
+      }  
+      
     }
   }
 
@@ -118,11 +126,13 @@ function SettingImage() {
           return <p>{message}</p>;
         } else {
           return (
+            showSelector && 
             <Selector
               style={styleSelector}
               style2={style2}
               className={styles.box}
               setOption={setOption}
+              setShowSelector={setShowSelector}
             />
           );
         }

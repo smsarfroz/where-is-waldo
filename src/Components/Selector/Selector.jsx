@@ -1,10 +1,13 @@
 import { SiCodesandbox } from "react-icons/si";
 import styles from './Selector.module.css';
 
-const Selector = ({style, style2, setOption}) => {
+const Selector = ({style, style2, setOption, setShowSelector}) => {
     
     function handleClick(e) {
         setOption(e.target.dataset.value);
+        e.stopPropagation();
+        setShowSelector(false);
+        console.log("setting showSelector as false");
     }
 
     return (
