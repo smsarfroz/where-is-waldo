@@ -1,0 +1,9 @@
+.Home {
+    background-image: url('src/assets/canvas.png');
+    /* background-size: cover; */
+    object-fit: cover;
+    background-position: center;
+    /* object-fit: fill; */
+    height: 600px;
+    width: 100%;
+}
