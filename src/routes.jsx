@@ -1,6 +1,7 @@
 import App from "./App";
 import ErrorPage from "./ErrorPage";
 import Home from "./Components/Home/Home.jsx";
+import Games from "./Components/Games/Games.jsx";
 
 const routes = [
     {
@@ -10,6 +11,10 @@ const routes = [
             {
                 path: "/",
                 element: <Home />
+            },
+            {
+                path: "/games",
+                element: <Games />
             }
         ],
         errorElement: <ErrorPage />
