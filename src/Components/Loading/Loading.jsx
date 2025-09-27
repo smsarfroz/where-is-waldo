@@ -14,7 +14,7 @@ const Loading = () => {
             bgOpacity="0.1"
             speed="1.4"
             color="white" 
-            clasName={styles.loadingIcon}
+            className={styles.loadingIcon}
             />
         
     </>
