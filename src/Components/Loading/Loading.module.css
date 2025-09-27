@@ -1,0 +1,16 @@
+* {
+    background-color: black;
+    border: 2px solid red;
+}
+
+/* .Container {
+    position: relative;
+} */
+
+.loadingIcon {
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    left: 50%;
+    top: 50%;   
+}

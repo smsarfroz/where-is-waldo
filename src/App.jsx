@@ -6,6 +6,10 @@ import logo from './assets/waldo-icon.png';
 import { useState } from 'react';
 import "@fontsource/cormorant-garamond";
 import '@fontsource/nunito-sans';
+import { waldoContext } from './waldoContext.js';
+import ErrorPage from './ErrorPage.jsx';
+import Loading from './Components/Loading/Loading.jsx';
+import { useEffect } from 'react';
 
 const VITE_BASE_URL =  import.meta.env.VITE_BASE_URL || '/api';
 // console.log(VITE_BASE_URL);
@@ -16,28 +20,30 @@ const useFetchData = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const fetchData = async () => {
-    try {
-      
-      const [res1] = await Promise.all([
-        fetch(api1),
-      ]); 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        
+        const [res1] = await Promise.all([
+          fetch(api1),
+        ]); 
 
-      if (!res1.ok) {
-        throw new Error(`HTTP error! Status: ${Response.status}`);
-      } 
+        if (!res1.ok) {
+          throw new Error(`HTTP error! Status: ${Response.status}`);
+        } 
 
-      const data1 = await res1.json();
+        const data1 = await res1.json();
 
-      setSettingsData(data1);
-      
-      setLoading(false);
-  
-    } catch (error) {
-      setError(error);
+        setSettingsData(data1);
+        
+        setLoading(false);
+    
+      } catch (error) {
+        setError(error);
+      };
     };
-  };
-  fetchData();
+    fetchData();
+  }, [api1]);
 
   return {loading, error, settingsData};
 };
@@ -45,37 +51,41 @@ const useFetchData = () => {
 function App() {
   const { loading, error, settingsData } = useFetchData();
 
-  if (loading) {
-    return <p>Loading...</p>;
-  }
-  if (error) {
-    return error;
-  }
+  return <Loading />
+  // if (loading) {
+  //   // return <p>Loading...</p>;
+  // }
+  // if (error) {
+  //   // console.log("error ", error);
+  //   // return <ErrorPage />;
+  // }
 
 
-  return (
-    <div>
-      {/* <SettingImage /> */}
+  // return (
+  //   <div>
+  //     {/* <SettingImage /> */}
 
-      <nav>
-        <div className="navContent">
-          <img src={logo} alt="" className='logo'/>
-          <div className='navigation'>
-            <Link to='/'>HOME</Link>
-            <Link to='/games'>GAMES</Link>
-            <Link>LEADERBOARD</Link>
-            <Link>ABOUT</Link>
-          </div>
-        </div>
-      </nav>
+  //     <nav>
+  //       <div className="navContent">
+  //         <img src={logo} alt="" className='logo'/>
+  //         <div className='navigation'>
+  //           <Link to='/'>HOME</Link>
+  //           <Link to='/games'>GAMES</Link>
+  //           <Link>LEADERBOARD</Link>
+  //           <Link>ABOUT</Link>
+  //         </div>
+  //       </div>
+  //     </nav>
 
-      <Outlet />  
-      
-      <footer>
+  //     <waldoContext.Provider value={{settingsData}}>
+  //       <Outlet />  
+  //     </waldoContext.Provider>
 
-      </footer>
-    </div>
-  )
+  //     <footer>
+
+  //     </footer>
+  //   </div>
+  // )
 }
 
 export default App
