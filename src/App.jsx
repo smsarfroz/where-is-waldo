@@ -1,6 +1,6 @@
 import './App.css';
 import SettingImage from './Components/SettingImage/SettingImage.jsx';
-import { Outlet } from 'react-router-dom';
+import { Outlet, useLocation } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import logo from './assets/waldo-icon.png';
 import { useState } from 'react';
@@ -10,6 +10,9 @@ import { waldoContext } from './waldoContext.js';
 import ErrorPage from './ErrorPage.jsx';
 import Loading from './Components/Loading/Loading.jsx';
 import { useEffect } from 'react';
+
+import { Trefoil } from 'ldrs/react'
+import 'ldrs/react/Trefoil.css'
 
 const VITE_BASE_URL =  import.meta.env.VITE_BASE_URL || '/api';
 // console.log(VITE_BASE_URL);
@@ -51,41 +54,40 @@ const useFetchData = () => {
 function App() {
   const { loading, error, settingsData } = useFetchData();
 
-  return <Loading />
-  // if (loading) {
-  //   // return <p>Loading...</p>;
-  // }
-  // if (error) {
-  //   // console.log("error ", error);
-  //   // return <ErrorPage />;
-  // }
+  if (loading) {
+    return <Loading />;
+    // return <p>Loading...</p>;
+  }
+  if (error) {
+    // console.log("error ", error);
+    return <ErrorPage />;
+  }
 
 
-  // return (
-  //   <div>
-  //     {/* <SettingImage /> */}
+  return (
+    <div>
 
-  //     <nav>
-  //       <div className="navContent">
-  //         <img src={logo} alt="" className='logo'/>
-  //         <div className='navigation'>
-  //           <Link to='/'>HOME</Link>
-  //           <Link to='/games'>GAMES</Link>
-  //           <Link>LEADERBOARD</Link>
-  //           <Link>ABOUT</Link>
-  //         </div>
-  //       </div>
-  //     </nav>
+      <nav>
+        <div className="navContent">
+          <img src={logo} alt="" className='logo'/>
+          <div className='navigation'>
+            <Link to='/'>HOME</Link>
+            <Link to='/games'>GAMES</Link>
+            <Link>LEADERBOARD</Link>
+            <Link>ABOUT</Link>
+          </div>
+        </div>
+      </nav>
 
-  //     <waldoContext.Provider value={{settingsData}}>
-  //       <Outlet />  
-  //     </waldoContext.Provider>
+      <waldoContext.Provider value={{settingsData}}>
+        <Outlet />  
+      </waldoContext.Provider>
 
-  //     <footer>
+      <footer>
 
-  //     </footer>
-  //   </div>
-  // )
+      </footer>
+    </div>
+  )
 }
 
 export default App

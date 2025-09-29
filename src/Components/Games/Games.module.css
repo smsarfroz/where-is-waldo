@@ -1,0 +1,7 @@
+.gameList {
+    display: flex;
+    flex-direction: row;
+    gap: 2vw;
+
+    margin: 2vw 3vw;
+}

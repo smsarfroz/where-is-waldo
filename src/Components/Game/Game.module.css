@@ -1,0 +1,34 @@
+* {
+    border: 0.3px solid red;
+}
+
+.gameUnstarted {
+    width: 40vw;
+    height: 40vw;
+    border: 2px solid black;
+}
+
+.startButton {
+    cursor: pointer;
+}
+
+.stickyBanner {
+    position: sticky;
+    color: white;
+    background-color: black;
+    /* height: 10vw; */
+}
+
+.gamePage {
+    position: relative;
+    top: 0;
+    left: 0;
+
+    background-color: black;
+}
+
+.gameImage {
+    max-width: 100%;
+    height: auto;
+    margin: 4vw 2vw;
+}

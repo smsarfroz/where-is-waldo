@@ -1,0 +1,8 @@
+.gameCard {
+    height: 40vw;
+    width: 21vw;
+    border: 2px solid black;
+
+    color: white;
+    cursor: pointer;
+}
