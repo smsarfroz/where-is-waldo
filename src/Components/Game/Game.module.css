@@ -20,15 +20,18 @@
 }
 
 .gamePage {
-    position: relative;
+    position: absolute;
     top: 0;
     left: 0;
-
-    background-color: black;
+    z-index: 4;
+    background-color: black;    
+    width: 100vw;
+    min-height: 100vh;
+    max-width: 100%;
 }
 
 .gameImage {
-    max-width: 100%;
-    height: auto;
+    /* min-width: 100vh; */
+    /* min-height: 100vh; */
     margin: 4vw 2vw;
 }
