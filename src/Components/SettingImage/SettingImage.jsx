@@ -1,7 +1,9 @@
-import { useEffect, useRef } from "react";
+import { useContext, useEffect, useRef } from "react";
 import { useState } from "react";
 import styles from "./SettingImage.module.css";
 import Selector from "../Selector/Selector.jsx";
+import { waldoContext } from "../../waldoContext.js";
+import { useParams } from "react-router-dom";
 const width = 1200;
 const height = 700;
 const size = 20;
@@ -69,6 +71,13 @@ function SettingImage() {
   const [showSelector, setShowSelector] = useState(false);
 
   const {loading, message, option, setMessage, setOption} = useFetch(coordx, coordy);
+  
+  const { settingsData } = useContext(waldoContext);
+  let params = useParams();
+  let gameid = params.id;
+  let id = parseInt(gameid);
+  const setting = settingsData[id - 1];
+  
   function handleClick(event) {
     if (mouseClickRef.current && !option) {
       setShowSelector(true);
@@ -108,9 +117,13 @@ function SettingImage() {
       ${up ? `translateY(${-size}px) ` : ` `}
       `,
   };
+  const style = {
+    backgroundImage: `url('${setting.imglocation}')`,
+    objectFit: 'cover'
+  };
 
   return (
-    <div ref={mouseClickRef} onClick={handleClick} className={styles.Image}>
+    <div ref={mouseClickRef} onClick={handleClick} className={styles.Image} style={style}>
       {(() => {
         if (loading) {
           return <p>Loading...</p>;

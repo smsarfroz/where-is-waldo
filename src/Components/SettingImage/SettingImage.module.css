@@ -6,7 +6,8 @@
   min-height: 100vh;
   /* why did this min height work but other ways like height auto, 100vh, 100% were not working */
   cursor: pointer;
-  background-image: url('../../assets/settings/set1.jpeg');
+  /* background-image: url('../../assets/settings/set1.jpeg'); */
+  /* background-image: url('/set2.png'); */
   background-size: cover;
   background-position: center;
 }
