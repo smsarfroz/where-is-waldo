@@ -1,11 +1,13 @@
 * {
-    /* border: 0.3px solid red; */
+    border: 0.3px solid red;
 }
 
 .gameUnstarted {
-    width: 40vw;
-    height: 40vw;
+    max-width: 100%;
+    min-height: 100vh;
     border: 2px solid black;
+    background-size: contain;
+    background-repeat: no-repeat;
 }
 
 .startButton {

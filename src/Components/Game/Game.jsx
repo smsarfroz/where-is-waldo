@@ -47,7 +47,6 @@ const Game = () => {
     // const absolutePath = `${VITE_BASE_URL}/${setting.imglocation}`;
     const style = {
         backgroundImage: `url(${setting.imglocation})`,
-        objectFit: 'cover',
     }
     function handleClick() {
         setSeconds(0);
