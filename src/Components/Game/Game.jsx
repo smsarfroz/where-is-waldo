@@ -62,8 +62,10 @@ const Game = () => {
             {
                 !isGameStarted ? (
                     <div className={styles.gameUnstarted} style={style}>
-                        <p className="gameTitle">{setting.name}</p>
-                        <button onClick={handleClick} className={styles.startButton}>Start Game</button>
+                        <div className={styles.dimLight}>                        
+                            <p className={styles.gameTitle}>{setting.name}</p>
+                            <button onClick={handleClick} className={styles.startButton}>Start Game</button>
+                        </div>
                     </div>
                 ) : (
                     <div className={styles.gamePage}>

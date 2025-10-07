@@ -3,9 +3,6 @@
 }
 .Image {
   border: 2px solid black;
-  /* width: auto; */
-  /* min-height: 100vh; */
-  /* height: auto; */
   cursor: pointer;
   background-size: contain;
 }
