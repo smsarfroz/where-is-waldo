@@ -1,8 +1,45 @@
 .gameCard {
+    position: relative;
     height: 40vw;
     width: 21vw;
     border: 2px solid black;
 
     color: white;
     cursor: pointer;
+    border: 1px solid white;
+}
+.gameTitle {
+    display: none;
+}
+.gameDifficulty {
+    display: none;
+}
+.gameCard:hover .gameTitle {
+    background-color: rgba(72, 72, 72, 0.2); 
+  
+    backdrop-filter: brightness(50%);
+    font-size: 1.8vw;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    padding: 1vw 1vw;
+}
+
+.gameCard:hover .gameDifficulty {
+    position: absolute;
+    bottom: 0;
+    background-color: rgba(72, 72, 72, 0.2); 
+  
+    backdrop-filter: brightness(50%);
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    padding: 1vw 1vw;
+
+    font-size: 1.6vw;
+}
+
+.gameCard:hover {
+
 }

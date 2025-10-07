@@ -8,8 +8,8 @@ const Games = () => {
     const { settingsData } = useContext(waldoContext);
     console.log("settingsData ", settingsData);
     return (
-        <>
-            <h1>Which game would you like to play?</h1>
+        <div className={styles.container}>
+            <p className={styles.Title}>Which game would you like to play?</p>
             
             <div className={styles.gameList}>
                 {settingsData.map((setting) => {
@@ -21,7 +21,7 @@ const Games = () => {
                     )
                 })}
             </div>
-        </>
+        </div>
     );
 };
 

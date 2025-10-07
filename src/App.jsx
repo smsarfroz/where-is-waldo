@@ -78,6 +78,7 @@ function App() {
           </div>
         </div>
       </nav>
+      <hr className="lineBreak"/>
 
       <waldoContext.Provider value={{settingsData}}>
         <Outlet />  

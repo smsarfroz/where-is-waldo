@@ -103,3 +103,8 @@ footer {
     width: 100%;
 }
 
+.lineBreak {
+  height: 0.8px;
+  border: none;
+  background-color: #828282;
+}
