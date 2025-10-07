@@ -3,11 +3,16 @@
 }
 .Image {
   border: 2px solid black;
-  min-height: 250vh;
-  /* why did this min height work but other ways like height auto, 100vh, 100% were not working */
+  /* width: auto; */
+  /* min-height: 100vh; */
+  /* height: auto; */
   cursor: pointer;
-  background-size: cover;
+  background-size: contain;
 }
 *, *::before, *::after {
   box-sizing: border-box;
+}
+
+img:focus {
+  outline: none;
 }

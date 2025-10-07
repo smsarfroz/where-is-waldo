@@ -118,12 +118,18 @@ function SettingImage() {
       `,
   };
   const style = {
-    backgroundImage: `url('${setting.imglocation}')`,
+    // backgroundImage: `url('${setting.imglocation}')`,
     objectFit: 'cover'
   };
 
   return (
     <div ref={mouseClickRef} onClick={handleClick} className={styles.Image} style={style}>
+      <img 
+        src={setting.imglocation} 
+        alt="Game scene" 
+        style={style}
+        className={styles.imgtag}
+      />
       {(() => {
         if (loading) {
           return <p>Loading...</p>;
