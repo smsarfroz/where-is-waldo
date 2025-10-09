@@ -23,6 +23,10 @@
     justify-content: center;
     text-align: center;
     padding: 1vw 1vw;
+
+    position: absolute;
+    top: 0;
+    width: 100%;
 }
 
 .gameCard:hover .gameDifficulty {
@@ -42,4 +46,11 @@
 
 .gameCard:hover {
 
+}
+
+.imageCard {
+    object-fit: cover;
+    width: auto;
+    min-height: 100%;
+    height: auto;
 }

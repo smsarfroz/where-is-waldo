@@ -19,7 +19,7 @@ const Selector = ({style, style2, setOption, setShowSelector}) => {
                 <div className={styles.option} onClick={handleClick} data-value="Wizard">Wizard</div>
                 <div className={styles.option} onClick={handleClick} data-value="Cancel">Cancel</div>
             </div>
-
+        
         </>
     )
 };

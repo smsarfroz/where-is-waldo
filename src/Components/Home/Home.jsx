@@ -1,4 +1,5 @@
 import styles from './Home.module.css';
+import { Link } from 'react-router-dom';
 
 const Home = () => {
     return (
@@ -17,8 +18,10 @@ const Home = () => {
                             <li>Be fast! Quickest one will be on top of the leaderboard</li>
                         </ol>
                     </div>
-
-                    <button className={styles.playButton}>Play Now</button>
+                    
+                    <Link to='/games'>
+                        <button className={styles.playButton}>Play Now</button>
+                    </Link>
                 </div>
             </div>
         </div>

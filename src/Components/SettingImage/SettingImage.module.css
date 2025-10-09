@@ -1,10 +1,15 @@
 .box {
   /* pointer-events: none; */
 }
+.imgtag {
+  display: block;
+  position: relative;
+}
 .Image {
   border: 2px solid black;
   cursor: pointer;
-  background-size: contain;
+  display: inline-block;
+  position: relative;
 }
 *, *::before, *::after {
   box-sizing: border-box;

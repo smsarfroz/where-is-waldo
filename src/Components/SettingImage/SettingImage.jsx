@@ -4,17 +4,18 @@ import styles from "./SettingImage.module.css";
 import Selector from "../Selector/Selector.jsx";
 import { waldoContext } from "../../waldoContext.js";
 import { useParams } from "react-router-dom";
-const width = 1200;
-const height = 700;
+// const width = 1200;
+// const height = 700;
 const size = 20;
 
 const VITE_BASE_URL = import.meta.env.VITE_BASE_URL || "/api";
 
-const useFetch = (coordx, coordy) => {
+const useFetch = (coordx, coordy, width, height) => {
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState(null);
   const [option, setOption] = useState(null);
 
+  console.log("width, height ", width, height);
   useEffect(() => {
     const xpercent = (coordx / width) * 100;
     const ypercent = (coordy / height) * 100;
@@ -57,7 +58,7 @@ const useFetch = (coordx, coordy) => {
     } else if (option == 'Cancel') {
       setOption(null);
     }
-  }, [option, coordx, coordy]);
+  }, [option, coordx, coordy, width, height]);
   return { loading, message, option, setMessage, setOption };
 };
 
@@ -65,12 +66,14 @@ function SettingImage() {
   const mouseClickRef = useRef(null);
   const [coordx, setCoordx] = useState(null);
   const [coordy, setCoordy] = useState(null);
+  const [imgDim, setImgDim] = useState({ width: 1200, height: 700});
   const [left, setLeft] = useState(true);
   const [up, setUp] = useState(true);
   
+  console.log('coordx, coordy ', coordx, coordy);
   const [showSelector, setShowSelector] = useState(false);
 
-  const {loading, message, option, setMessage, setOption} = useFetch(coordx, coordy);
+  const {loading, message, option, setMessage, setOption} = useFetch(coordx, coordy, imgDim.width, imgDim.height);
   
   const { settingsData } = useContext(waldoContext);
   let params = useParams();
@@ -78,6 +81,14 @@ function SettingImage() {
   let id = parseInt(gameid);
   const setting = settingsData[id - 1];
   
+  const handleImageLoad = (e) => {
+    const img = e.target;
+    setImgDim({
+      width: img.offsetWidth,
+      height: img.offsetHeight
+    });
+  };
+
   function handleClick(event) {
     if (mouseClickRef.current && !option) {
       setShowSelector(true);
@@ -87,8 +98,8 @@ function SettingImage() {
 
       setCoordx(x);
       setCoordy(y);
-      const rightSide = width - x;
-      const lowerSide = height - y;
+      const rightSide = imgDim.width - x;
+      const lowerSide = imgDim.height - y;
 
       if (rightSide > x) {
         setLeft(false);
@@ -103,13 +114,13 @@ function SettingImage() {
       
     }
   }
-
   const styleSelector = {
-    transform: `translate(-50%, -50%) translate(${coordx}px, ${coordy}px)`,
+    transform: `translateY(-${imgDim.height}px) translate(-50%, -50%) translate(${coordx}px, ${coordy}px)`,
   };
   const style2 = {
     backgroundColor: "blue",
     transform: `
+      translateY(-${imgDim.height}px)
       ${left ? `translate(-100%, 0) ` : " "}
       ${up ? `translate(0, -100%) ` : " "}
       translate(${coordx + size / 2}px, ${coordy + size / 2}px) 
@@ -119,9 +130,8 @@ function SettingImage() {
   };
   const style = {
     // backgroundImage: `url('${setting.imglocation}')`,
-    objectFit: 'cover'
+    // objectFit: 'cover'
   };
-
   return (
     <div ref={mouseClickRef} onClick={handleClick} className={styles.Image} style={style}>
       <img 
@@ -129,6 +139,7 @@ function SettingImage() {
         alt="Game scene" 
         style={style}
         className={styles.imgtag}
+        onLoad={handleImageLoad}
       />
       {(() => {
         if (loading) {
