@@ -71,16 +71,17 @@ const Game = () => {
                             </div>
 
                             <div className={styles.findIcons}>
-                                <h1>Can you find them?</h1>
+                                <p className={styles.Heading}>Can you find them?</p>
                                 <div className={styles.icons}>
                                     {
                                         characters.map(character => {
                                             if (character.settingid == setting.settingid) {
                                                 return (
-                                                    <div className={styles.icon}>
+                                                    <div className={styles.iconDiv}>
                                                         <img 
                                                             src={character.imglocation} 
                                                             alt="icon" 
+                                                            className={styles.imgIcon}
                                                         />
                                                     </div>
                                                 );

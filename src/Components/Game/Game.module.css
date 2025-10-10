@@ -97,4 +97,23 @@
 .icons {
     display: flex;
     flex-direction: row;
+    gap: 1vw;
+}
+
+.imgIcon {
+    border-radius: 50%;
+    width: 4em;
+}
+
+.Heading {
+    font-family: 'Cormorant Garamond';
+    font-size: 2.5vw;
+    font-weight: bold;
+}
+
+.findIcons {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
