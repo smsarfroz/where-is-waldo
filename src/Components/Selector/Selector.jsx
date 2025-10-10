@@ -1,8 +1,10 @@
 import { SiCodesandbox } from "react-icons/si";
 import styles from './Selector.module.css';
+import { waldoContext } from "../../waldoContext";
+import { useContext } from "react";
 
-const Selector = ({style, style2, setOption, setShowSelector}) => {
-    
+const Selector = ({style, style2, setOption, setShowSelector, gameid}) => {
+    const { characters } = useContext(waldoContext);
     function handleClick(e) {
         setOption(e.target.dataset.value);
         e.stopPropagation();
@@ -14,9 +16,15 @@ const Selector = ({style, style2, setOption, setShowSelector}) => {
             <SiCodesandbox style={style} size={20} className={styles.box}/>
             
             <div className={styles.dropdown} style={style2}>
-                <div className={styles.option} onClick={handleClick} data-value="Waldo">Waldo</div>
-                <div className={styles.option} onClick={handleClick} data-value="Wilma">Wilma</div>
-                <div className={styles.option} onClick={handleClick} data-value="Wizard">Wizard</div>
+                {
+                    characters.map(character => {
+                        if (character.settingid == gameid) {
+                            return (
+                                <div className={styles.option} onClick={handleClick} data-value={character.charname} key={character.id}>{character.charname}</div>
+                            );
+                        }
+                    })
+                }
                 <div className={styles.option} onClick={handleClick} data-value="Cancel">Cancel</div>
             </div>
         

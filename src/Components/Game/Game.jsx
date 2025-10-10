@@ -14,6 +14,12 @@ const Game = () => {
     const { settingsData } = useContext(waldoContext);
     const [seconds, setSeconds] = useState(0);
     const [minutes, setMinutes] = useState(0);
+    const { characters } = useContext(waldoContext);
+
+    let params = useParams();
+    let gameid = params.id;
+    let id = parseInt(gameid);
+    const setting = settingsData[id - 1];
 
     useEffect(() => {
         const x = setInterval(() => {
@@ -34,17 +40,6 @@ const Game = () => {
         if (seconds == 59) setMinutes(prev => prev + 1);
     }, [seconds]);
 
-    let params = useParams();
-    let gameid = params.id;
-    let id = parseInt(gameid);
-    const setting = settingsData[id - 1];
-    // console.log("settings ", settingsData);
-
-    // console.log(`${VITE_BASE_URL}/${setting.imglocation}`);
-    
-    // console.log("minutes, seconds", minutes, seconds);
-
-    // const absolutePath = `${VITE_BASE_URL}/${setting.imglocation}`;
     const style = {
         backgroundImage: `url(${setting.imglocation})`,
     }

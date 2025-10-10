@@ -19,7 +19,9 @@ const VITE_BASE_URL =  import.meta.env.VITE_BASE_URL || '/api';
 
 const useFetchData = () => {
   const api1 = `${VITE_BASE_URL}/settings`;
+  const api2 = `${VITE_BASE_URL}/characters`;
   const [settingsData, setSettingsData] = useState(null);
+  const [characters, setCharacters] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -27,17 +29,23 @@ const useFetchData = () => {
     const fetchData = async () => {
       try {
         
-        const [res1] = await Promise.all([
+        const [res1, res2] = await Promise.all([
           fetch(api1),
+          fetch(api2)
         ]); 
 
         if (!res1.ok) {
           throw new Error(`HTTP error! Status: ${Response.status}`);
         } 
-
+        if (!res2.ok) {
+          throw new Error(`HTTP error! Status: ${Response.status}`);
+        }
+        
         const data1 = await res1.json();
+        const data2 = await res2.json();
 
         setSettingsData(data1);
+        setCharacters(data2);
         
         setLoading(false);
     
@@ -46,13 +54,13 @@ const useFetchData = () => {
       };
     };
     fetchData();
-  }, [api1]);
+  }, [api1, api2]);
 
-  return {loading, error, settingsData};
+  return {loading, error, settingsData, characters};
 };
 
 function App() {
-  const { loading, error, settingsData } = useFetchData();
+  const { loading, error, settingsData, characters } = useFetchData();
 
   if (loading) {
     return <Loading />;
@@ -80,7 +88,7 @@ function App() {
       </nav>
       <hr className="lineBreak"/>
 
-      <waldoContext.Provider value={{settingsData}}>
+      <waldoContext.Provider value={{settingsData, characters}}>
         <Outlet />  
       </waldoContext.Provider>
 
