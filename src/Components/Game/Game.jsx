@@ -65,14 +65,28 @@ const Game = () => {
                 ) : (
                     <div className={styles.gamePage}>
                         <div className={styles.stickyBanner}>
-                            <div className="Timer">
+                            <div className={styles.Timer}>
                                 <h1>Timer</h1>
                                 <p>{minutes}:{seconds}</p>
                             </div>
 
-                            <div className="findIcons">
+                            <div className={styles.findIcons}>
                                 <h1>Can you find them?</h1>
-                                <div className="icons">
+                                <div className={styles.icons}>
+                                    {
+                                        characters.map(character => {
+                                            if (character.settingid == setting.settingid) {
+                                                return (
+                                                    <div className={styles.icon}>
+                                                        <img 
+                                                            src={character.imglocation} 
+                                                            alt="icon" 
+                                                        />
+                                                    </div>
+                                                );
+                                            }
+                                        })
+                                    }
                                 </div>
                             </div>
 
