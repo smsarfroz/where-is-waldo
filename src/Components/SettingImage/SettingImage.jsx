@@ -157,7 +157,7 @@ function SettingImage() {
               className={styles.box}
               setOption={setOption}
               setShowSelector={setShowSelector}
-              gameid={gameid}
+              settingid={setting.settingid}
             />
           );
         }

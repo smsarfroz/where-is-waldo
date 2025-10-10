@@ -3,7 +3,7 @@ import styles from './Selector.module.css';
 import { waldoContext } from "../../waldoContext";
 import { useContext } from "react";
 
-const Selector = ({style, style2, setOption, setShowSelector, gameid}) => {
+const Selector = ({style, style2, setOption, setShowSelector, settingid}) => {
     const { characters } = useContext(waldoContext);
     function handleClick(e) {
         setOption(e.target.dataset.value);
@@ -18,7 +18,7 @@ const Selector = ({style, style2, setOption, setShowSelector, gameid}) => {
             <div className={styles.dropdown} style={style2}>
                 {
                     characters.map(character => {
-                        if (character.settingid == gameid) {
+                        if (character.settingid == settingid) {
                             return (
                                 <div className={styles.option} onClick={handleClick} data-value={character.charname} key={character.id}>{character.charname}</div>
                             );
@@ -26,8 +26,7 @@ const Selector = ({style, style2, setOption, setShowSelector, gameid}) => {
                     })
                 }
                 <div className={styles.option} onClick={handleClick} data-value="Cancel">Cancel</div>
-            </div>
-        
+            </div>    
         </>
     )
 };
