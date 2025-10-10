@@ -9,8 +9,11 @@ ol li{
 }
 .dropdown {
     position: absolute;
-    /* z-index: 101; */
-    border: 2px solid black;
+    border: 2px solid #F9C349;
+    background-color: #F9C349;
+    color: black;
+    font-weight: bold;
+    font-family: 'Cormorant Garamond';
     width: 120px;
 }
 
@@ -22,6 +25,14 @@ ol li{
 }
 
 .option:hover {
-    background-color: rgb(244, 244, 244);
+    background-color: black;
     cursor: pointer;
+    color: #F9C349;
+    font-weight: bold;
+}
+
+hr {
+    background-color: black;
+    border: none;
+    height: 1px;
 }

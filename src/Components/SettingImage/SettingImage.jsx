@@ -117,7 +117,6 @@ function SettingImage() {
     transform: `translateY(-${imgDim.height}px) translate(-50%, -50%) translate(${coordx}px, ${coordy}px)`,
   };
   const style2 = {
-    backgroundColor: "blue",
     transform: `
       translateY(-${imgDim.height}px)
       ${left ? `translate(-100%, 0) ` : " "}

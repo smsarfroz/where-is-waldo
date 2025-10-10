@@ -2,8 +2,6 @@
     /* border: 0.3px solid red; */
 }
 
-
-
 .gamePage {
     position: absolute;
     top: 0;
@@ -102,12 +100,17 @@
 
 .imgIcon {
     border-radius: 50%;
-    width: 4em;
+    width: 4.8em;
+    cursor: pointer;
+}
+
+.imgIcon:hover {
+    filter: brightness(125%);
 }
 
 .Heading {
     font-family: 'Cormorant Garamond';
-    font-size: 2.5vw;
+    font-size: 2.2vw;
     font-weight: bold;
 }
 
@@ -116,4 +119,31 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+
+.timerText {
+    font-family: 'Cormorant Garamond';
+    font-size: 2.5vw;
+    font-weight: bold;
+}
+
+* {
+    /* border: 2px solid red; */
+}
+.timeStamp {
+    margin-left: 0.2vw;
+    font-size: 3vw;
+    padding-top: 0;
+    /* font-family: 'Cormorant Garamond'; */
+}
+
+.iconDiv {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.charname {
+    font-family: 'Cormorant Garamond';
 }

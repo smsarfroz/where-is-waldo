@@ -12,8 +12,7 @@ const Game = () => {
     const navigate = useNavigate();
     const [isGameStarted, setisGameStarted] = useState(false);
     const { settingsData } = useContext(waldoContext);
-    const [seconds, setSeconds] = useState(0);
-    const [minutes, setMinutes] = useState(0);
+    const [time, setTime] = useState({minute: 0, second: 0});
     const { characters } = useContext(waldoContext);
 
     let params = useParams();
@@ -23,12 +22,11 @@ const Game = () => {
 
     useEffect(() => {
         const x = setInterval(() => {
-            setSeconds((prev) => {
-                if (prev === 59) {
-                    return 0;
-                } else {
-                    return prev + 1;
+            setTime(prevTime => {
+                if (prevTime.second == 59) {
+                    return {minute: prevTime.minute + 1, second: 0};
                 }
+                return {minute: prevTime.minute, second: prevTime.second + 1};
             });
 
         }, 1000);
@@ -36,16 +34,11 @@ const Game = () => {
         return () => clearInterval(x);
     }, []); 
 
-    useEffect(() => {
-        if (seconds == 59) setMinutes(prev => prev + 1);
-    }, [seconds]);
-
     const style = {
         backgroundImage: `url(${setting.imglocation})`,
     }
     function handleClick() {
-        setSeconds(0);
-        setMinutes(0);
+        setTime({minute: 0, second: 0});
         setisGameStarted(true);
     }
     function handleCancel() {
@@ -66,8 +59,8 @@ const Game = () => {
                     <div className={styles.gamePage}>
                         <div className={styles.stickyBanner}>
                             <div className={styles.Timer}>
-                                <h1>Timer</h1>
-                                <p>{minutes}:{seconds}</p>
+                                <p className={styles.timerText}>Timer</p>
+                                <p className={styles.timeStamp}>{time.minute}:{time.second}</p>
                             </div>
 
                             <div className={styles.findIcons}>
@@ -77,13 +70,18 @@ const Game = () => {
                                         characters.map(character => {
                                             if (character.settingid == setting.settingid) {
                                                 return (
-                                                    <div className={styles.iconDiv}>
-                                                        <img 
-                                                            src={character.imglocation} 
-                                                            alt="icon" 
-                                                            className={styles.imgIcon}
-                                                        />
-                                                    </div>
+                                                    <>
+                                                        <div className={styles.iconDiv}>
+                                                            <img 
+                                                                src={character.imglocation} 
+                                                                alt="icon" 
+                                                                className={styles.imgIcon}
+                                                            />
+                                                            <div className={styles.charname}>
+                                                                {character.charname}
+                                                            </div>
+                                                        </div>
+                                                    </>
                                                 );
                                             }
                                         })
