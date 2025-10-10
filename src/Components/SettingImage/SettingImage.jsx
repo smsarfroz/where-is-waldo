@@ -9,13 +9,12 @@ import { useParams } from "react-router-dom";
 const size = 20;
 
 const VITE_BASE_URL = import.meta.env.VITE_BASE_URL || "/api";
-
 const useFetch = (coordx, coordy, width, height) => {
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState(null);
   const [option, setOption] = useState(null);
 
-  console.log("width, height ", width, height);
+  // console.log("width, height ", width, height);
   useEffect(() => {
     const xpercent = (coordx / width) * 100;
     const ypercent = (coordy / height) * 100;
@@ -70,7 +69,7 @@ function SettingImage() {
   const [left, setLeft] = useState(true);
   const [up, setUp] = useState(true);
   
-  console.log('coordx, coordy ', coordx, coordy);
+  // console.log('coordx, coordy ', coordx, coordy);
   const [showSelector, setShowSelector] = useState(false);
 
   const {loading, message, option, setMessage, setOption} = useFetch(coordx, coordy, imgDim.width, imgDim.height);
