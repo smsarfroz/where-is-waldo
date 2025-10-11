@@ -24,6 +24,8 @@ const useFetch = (coordx, coordy, width, height) => {
     data["xpercentu"] = xpercent;
     data["ypercentu"] = ypercent;
 
+    console.log("data ", data);
+
     if (option && option != 'Cancel') {
       fetch(`${VITE_BASE_URL}/play/0/verify/0`, {
         mode: "cors",

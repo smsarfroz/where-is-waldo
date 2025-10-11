@@ -5,6 +5,7 @@ import { Navigate, useParams } from "react-router-dom";
 import SettingImage from "../SettingImage/SettingImage.jsx";
 import { MdOutlineCancel } from "react-icons/md";
 import { useNavigate } from 'react-router-dom';
+import { v4 as uuidv4 } from 'uuid';
 
 const VITE_BASE_URL =  import.meta.env.VITE_BASE_URL || '/api';
 
@@ -60,7 +61,9 @@ const Game = () => {
                         <div className={styles.stickyBanner}>
                             <div className={styles.Timer}>
                                 <p className={styles.timerText}>Timer</p>
-                                <p className={styles.timeStamp}>{time.minute}:{time.second}</p>
+                                <p className={styles.timeStamp}>
+                                    {time.minute <= 9 ? 0: null}{time.minute}:{time.second <= 9 ? 0: null}{time.second}
+                                </p>
                             </div>
 
                             <div className={styles.findIcons}>
@@ -70,18 +73,18 @@ const Game = () => {
                                         characters.map(character => {
                                             if (character.settingid == setting.settingid) {
                                                 return (
-                                                    <>
-                                                        <div className={styles.iconDiv}>
-                                                            <img 
-                                                                src={character.imglocation} 
-                                                                alt="icon" 
-                                                                className={styles.imgIcon}
-                                                            />
-                                                            <div className={styles.charname}>
-                                                                {character.charname}
-                                                            </div>
+                                                    
+                                                    <div className={styles.iconDiv} key={uuidv4()}>
+                                                        <img 
+                                                            src={character.imglocation} 
+                                                            alt="icon" 
+                                                            className={styles.imgIcon}
+                                                        />
+                                                        <div className={styles.charname}>
+                                                            {character.charname}
                                                         </div>
-                                                    </>
+                                                    </div>
+                                                
                                                 );
                                             }
                                         })

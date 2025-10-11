@@ -20,7 +20,7 @@
     /* background: rgba(204, 204, 204, 0.5); */
     color: white;
     background-color: black;
-    height: 10vw;
+    height: 10em;
     display: flex;
     justify-content: space-between;
     padding: 1.8vw 1.84vw;

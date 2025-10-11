@@ -20,10 +20,10 @@ const Selector = ({style, style2, setOption, setShowSelector, settingid}) => {
                     characters.map(character => {
                         if (character.settingid == settingid) {
                             return (
-                                <>
-                                    <div className={styles.option} onClick={handleClick} data-value={character.charname} key={character.id}>{character.charname}</div>
+                                <div key={character.id}>
+                                    <div className={styles.option} onClick={handleClick} data-value={character.charname}>{character.charname}</div>
                                     <hr/>
-                                </>
+                                </div>
                             );
                         }
                     })

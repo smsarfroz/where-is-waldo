@@ -15,6 +15,7 @@ ol li{
     font-weight: bold;
     font-family: 'Cormorant Garamond';
     width: 120px;
+    transition: all 0.2s ease-in-out;
 }
 
 .option {
