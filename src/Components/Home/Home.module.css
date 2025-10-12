@@ -9,6 +9,14 @@
     position: relative;
 }
 
+@keyframes slideRight {
+    0% {
+        left: 0;
+    }
+    100% {
+        left: 50%;
+    }
+}
 .Container {
     width: 60vw;
     height: 35vw;
@@ -18,6 +26,8 @@
     left: 50%;
     transform: translate(-50%, -50%);
     padding: 1vw 1vw;
+
+    animation: slideRight 1s ease-in-out alternate;
 }
 
 .line {

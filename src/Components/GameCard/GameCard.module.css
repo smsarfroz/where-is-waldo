@@ -1,3 +1,14 @@
+@keyframes slideIn {
+  0% {
+    opacity: 0;
+    transform: translateX(100px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
 .gameCard {
     position: relative;
     height: 40vw;
@@ -7,6 +18,8 @@
     color: white;
     cursor: pointer;
     border: 1px solid white;
+
+    animation: slideIn 0.6s ease-out forwards;
 }
 .gameTitle {
     display: none;

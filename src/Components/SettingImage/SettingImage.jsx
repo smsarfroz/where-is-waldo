@@ -24,7 +24,7 @@ const useFetch = (coordx, coordy, width, height) => {
     data["xpercentu"] = xpercent;
     data["ypercentu"] = ypercent;
 
-    console.log("data ", data);
+    // console.log("data ", data);
 
     if (option && option != 'Cancel') {
       fetch(`${VITE_BASE_URL}/play/0/verify/0`, {
@@ -70,7 +70,27 @@ function SettingImage() {
   const [imgDim, setImgDim] = useState({ width: 1200, height: 700});
   const [left, setLeft] = useState(true);
   const [up, setUp] = useState(true);
-  
+
+  const ref = useRef();
+  useEffect(() => {
+    if (!ref.current) return;
+
+    const resizeObserver = new ResizeObserver((entries) => {
+      const entry = entries[0];
+      console.log("dimensions ", entry.contentRect);
+      setImgDim({
+        width: entry.contentRect.width,
+        height: entry.contentRect.height
+      });
+    });
+
+    resizeObserver.observe(ref.current);
+
+    return () => {
+      resizeObserver.disconnect();
+    };
+  }, []);
+
   // console.log('coordx, coordy ', coordx, coordy);
   const [showSelector, setShowSelector] = useState(false);
 
@@ -81,14 +101,6 @@ function SettingImage() {
   let gameid = params.id;
   let id = parseInt(gameid);
   const setting = settingsData[id - 1];
-  
-  const handleImageLoad = (e) => {
-    const img = e.target;
-    setImgDim({
-      width: img.offsetWidth,
-      height: img.offsetHeight
-    });
-  };
 
   function handleClick(event) {
     if (mouseClickRef.current && !option) {
@@ -128,18 +140,14 @@ function SettingImage() {
       ${up ? `translateY(${-size}px) ` : ` `}
       `,
   };
-  const style = {
-    // backgroundImage: `url('${setting.imglocation}')`,
-    // objectFit: 'cover'
-  };
+
   return (
-    <div ref={mouseClickRef} onClick={handleClick} className={styles.Image} style={style}>
+    <div ref={mouseClickRef} onClick={handleClick} className={styles.Image}>
       <img 
+        ref={ref}
         src={setting.imglocation} 
         alt="Game scene" 
-        style={style}
         className={styles.imgtag}
-        onLoad={handleImageLoad}
       />
       {(() => {
         if (loading) {

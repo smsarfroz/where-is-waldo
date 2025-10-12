@@ -74,7 +74,7 @@ const Game = () => {
                                             if (character.settingid == setting.settingid) {
                                                 return (
                                                     
-                                                    <div className={styles.iconDiv} key={uuidv4()}>
+                                                    <div className={styles.iconDiv} key={character.id}>
                                                         <img 
                                                             src={character.imglocation} 
                                                             alt="icon" 
