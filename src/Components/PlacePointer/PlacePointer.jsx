@@ -9,10 +9,13 @@ const PlacePointer = ({coordx, coordy}) => {
         top: `${coordy}px`,
         transform: `translate(-50%, -50%)`
     };
+    function handleClick(e) {
+        e.stopPropagation();
+    }
 
     return (
         <>
-            <LuMapPinCheck style={stylePointer} size={30} className={styles.Pointer}/>    
+            <LuMapPinCheck style={stylePointer} size={60} className={styles.Pointer} onClick={handleClick}/>    
         </>
     )
 };

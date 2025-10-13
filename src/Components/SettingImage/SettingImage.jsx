@@ -13,7 +13,6 @@ const useFetch = (coordx, coordy, width, height, settingid, characters, setFound
   const [message, setMessage] = useState(null);
   const [option, setOption] = useState(null);
   
-  
   useEffect(() => {
     const xpercent = (coordx / width) * 100;
     const ypercent = (coordy / height) * 100;
@@ -29,8 +28,6 @@ const useFetch = (coordx, coordy, width, height, settingid, characters, setFound
     data["xpercentu"] = xpercent;
     data["ypercentu"] = ypercent;
 
-    console.log("data ", data);
-
     if (option && option != 'Cancel') {
       fetch(`${VITE_BASE_URL}/settings/${settingid}/verify/${charid}`, {
         mode: "cors",
@@ -42,7 +39,6 @@ const useFetch = (coordx, coordy, width, height, settingid, characters, setFound
       })
         .then((response) => {
           setLoading(true);
-          // console.log("response ", response);
           if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
           }
@@ -52,9 +48,7 @@ const useFetch = (coordx, coordy, width, height, settingid, characters, setFound
           setLoading(false);
           setMessage(response.message);
           setOption(null);
-          console.log("verify ", message === "Success", message);
           if (response.message === "Success") {
-            console.log("inserting into the array");
             setFoundCharactersCoords(prevArray => [...prevArray, {coordx: coordx, coordy: coordy}])
           }
         })
@@ -83,6 +77,8 @@ function SettingImage() {
   const [up, setUp] = useState(true);
   const [foundCharactersCoords, setFoundCharactersCoords] = useState([]);
   const { characters } = useContext(waldoContext);
+  let TotCharacters = 0;
+  let numOfCharsFound = 0;
 
   const ref = useRef();
   useEffect(() => {
@@ -90,7 +86,6 @@ function SettingImage() {
 
     const resizeObserver = new ResizeObserver((entries) => {
       const entry = entries[0];
-      // console.log("dimensions ", entry.contentRect);
       setImgDim({
         width: entry.contentRect.width,
         height: entry.contentRect.height
@@ -110,13 +105,16 @@ function SettingImage() {
   let id = parseInt(gameid);
   const setting = settingsData[id - 1];
 
+  characters.map(character => {
+    if (character.settingid == setting.settingid) {
+      TotCharacters++;
+    }
+  });
+
   const [showSelector, setShowSelector] = useState(false);
 
   const {loading, message, option, setMessage, setOption} = useFetch(coordx, coordy, imgDim.width, imgDim.height, setting.settingid, characters, setFoundCharactersCoords);
   
-  console.log("message ", message);  
-  console.log("array ", foundCharactersCoords);
-
   function handleClick(event) {
     if (mouseClickRef.current && !option) {
       setShowSelector(true);
