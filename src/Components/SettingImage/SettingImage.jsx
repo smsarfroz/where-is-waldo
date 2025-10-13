@@ -4,30 +4,35 @@ import styles from "./SettingImage.module.css";
 import Selector from "../Selector/Selector.jsx";
 import { waldoContext } from "../../waldoContext.js";
 import { useParams } from "react-router-dom";
-// const width = 1200;
-// const height = 700;
+import PlacePointer from "../PlacePointer/PlacePointer.jsx";
 const size = 20;
 
 const VITE_BASE_URL = import.meta.env.VITE_BASE_URL || "/api";
-const useFetch = (coordx, coordy, width, height) => {
+const useFetch = (coordx, coordy, width, height, settingid, characters, setFoundCharactersCoords) => {
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState(null);
   const [option, setOption] = useState(null);
-
-  // console.log("width, height ", width, height);
+  
+  
   useEffect(() => {
     const xpercent = (coordx / width) * 100;
     const ypercent = (coordy / height) * 100;
 
+    let charid = 0;
+    characters.map(character => {
+      if (character.charname === option) {
+        charid = character.charid;
+      }
+    });
     let data = {};
     data["option"] = option;
     data["xpercentu"] = xpercent;
     data["ypercentu"] = ypercent;
 
-    // console.log("data ", data);
+    console.log("data ", data);
 
     if (option && option != 'Cancel') {
-      fetch(`${VITE_BASE_URL}/play/0/verify/0`, {
+      fetch(`${VITE_BASE_URL}/settings/${settingid}/verify/${charid}`, {
         mode: "cors",
         method: "post",
         headers: {
@@ -37,6 +42,7 @@ const useFetch = (coordx, coordy, width, height) => {
       })
         .then((response) => {
           setLoading(true);
+          // console.log("response ", response);
           if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
           }
@@ -46,6 +52,11 @@ const useFetch = (coordx, coordy, width, height) => {
           setLoading(false);
           setMessage(response.message);
           setOption(null);
+          console.log("verify ", message === "Success", message);
+          if (response.message === "Success") {
+            console.log("inserting into the array");
+            setFoundCharactersCoords(prevArray => [...prevArray, {coordx: coordx, coordy: coordy}])
+          }
         })
         .catch((error) => {
           setLoading(false);
@@ -59,8 +70,8 @@ const useFetch = (coordx, coordy, width, height) => {
     } else if (option == 'Cancel') {
       setOption(null);
     }
-  }, [option, coordx, coordy, width, height]);
-  return { loading, message, option, setMessage, setOption };
+  }, [characters, coordx, coordy, height, message, option, setFoundCharactersCoords, settingid, width]);
+  return { loading, message, option, setMessage, setOption};
 };
 
 function SettingImage() {
@@ -70,6 +81,8 @@ function SettingImage() {
   const [imgDim, setImgDim] = useState({ width: 1200, height: 700});
   const [left, setLeft] = useState(true);
   const [up, setUp] = useState(true);
+  const [foundCharactersCoords, setFoundCharactersCoords] = useState([]);
+  const { characters } = useContext(waldoContext);
 
   const ref = useRef();
   useEffect(() => {
@@ -77,7 +90,7 @@ function SettingImage() {
 
     const resizeObserver = new ResizeObserver((entries) => {
       const entry = entries[0];
-      console.log("dimensions ", entry.contentRect);
+      // console.log("dimensions ", entry.contentRect);
       setImgDim({
         width: entry.contentRect.width,
         height: entry.contentRect.height
@@ -91,16 +104,18 @@ function SettingImage() {
     };
   }, []);
 
-  // console.log('coordx, coordy ', coordx, coordy);
-  const [showSelector, setShowSelector] = useState(false);
-
-  const {loading, message, option, setMessage, setOption} = useFetch(coordx, coordy, imgDim.width, imgDim.height);
-  
   const { settingsData } = useContext(waldoContext);
   let params = useParams();
   let gameid = params.id;
   let id = parseInt(gameid);
   const setting = settingsData[id - 1];
+
+  const [showSelector, setShowSelector] = useState(false);
+
+  const {loading, message, option, setMessage, setOption} = useFetch(coordx, coordy, imgDim.width, imgDim.height, setting.settingid, characters, setFoundCharactersCoords);
+  
+  console.log("message ", message);  
+  console.log("array ", foundCharactersCoords);
 
   function handleClick(event) {
     if (mouseClickRef.current && !option) {
@@ -124,8 +139,8 @@ function SettingImage() {
       } else {
         setUp(true);
       }  
-      
     }
+
   }
   const styleSelector = {
     transform: `translateY(-${imgDim.height}px) translate(-50%, -50%) translate(${coordx}px, ${coordy}px)`,
@@ -149,6 +164,19 @@ function SettingImage() {
         alt="Game scene" 
         className={styles.imgtag}
       />
+      {foundCharactersCoords && foundCharactersCoords.length > 0 ? 
+        foundCharactersCoords.map((coord, id) => {
+          return (
+            <PlacePointer 
+              key={id}
+              coordx={coord.coordx}
+              coordy={coord.coordy}
+            /> 
+          );
+        }): 
+        null
+      }
+
       {(() => {
         if (loading) {
           return <p>Loading...</p>;
@@ -156,7 +184,13 @@ function SettingImage() {
           setTimeout(() => {
             setMessage(null);
           }, 2000);
-          return <p>{message}</p>;
+
+          return (
+            <>
+              <p>{message}</p>
+              
+            </> 
+          )
         } else {
           return (
             showSelector && 

@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 const Home = () => {
     return (
         <div className={styles.Home}>
-            {/* <h1>Home Page</h1> */}
             <div className={styles.Container}>
                 <div className={styles.line}>
                     <p className={styles.title}>Welcome to "Where's Waldo" game</p>
