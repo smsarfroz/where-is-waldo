@@ -8,7 +8,7 @@ import PlacePointer from "../PlacePointer/PlacePointer.jsx";
 const size = 20;
 
 const VITE_BASE_URL = import.meta.env.VITE_BASE_URL || "/api";
-const useFetch = (coordx, coordy, width, height, settingid, characters, setFoundCharactersCoords) => {
+const useFetch = (coordx, coordy, width, height, settingid, characters, setFoundCharactersCoords, setFoundCharsIds) => {
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState(null);
   const [option, setOption] = useState(null);
@@ -49,6 +49,7 @@ const useFetch = (coordx, coordy, width, height, settingid, characters, setFound
           setMessage(response.message);
           setOption(null);
           if (response.message === "Success") {
+            setFoundCharsIds(prevArray => [...prevArray, charid]);
             setFoundCharactersCoords(prevArray => [...prevArray, {coordx: coordx, coordy: coordy}])
           }
         })
@@ -64,11 +65,11 @@ const useFetch = (coordx, coordy, width, height, settingid, characters, setFound
     } else if (option == 'Cancel') {
       setOption(null);
     }
-  }, [characters, coordx, coordy, height, message, option, setFoundCharactersCoords, settingid, width]);
+  }, [characters, coordx, coordy, height, message, option, setFoundCharactersCoords, settingid, width, setFoundCharsIds]);
   return { loading, message, option, setMessage, setOption};
 };
 
-function SettingImage() {
+function SettingImage({foundCharsIds, setFoundCharsIds}) {
   const mouseClickRef = useRef(null);
   const [coordx, setCoordx] = useState(null);
   const [coordy, setCoordy] = useState(null);
@@ -77,8 +78,7 @@ function SettingImage() {
   const [up, setUp] = useState(true);
   const [foundCharactersCoords, setFoundCharactersCoords] = useState([]);
   const { characters } = useContext(waldoContext);
-  let TotCharacters = 0;
-  let numOfCharsFound = 0;
+  const [TotCharacters, setTotCharacters] = useState(0);
 
   const ref = useRef();
   useEffect(() => {
@@ -105,15 +105,19 @@ function SettingImage() {
   let id = parseInt(gameid);
   const setting = settingsData[id - 1];
 
+  let tmp = 0;
   characters.map(character => {
     if (character.settingid == setting.settingid) {
-      TotCharacters++;
+      tmp++;
     }
   });
+  if (TotCharacters == 0 && tmp != 0) {
+    setTotCharacters(tmp);
+  }
 
   const [showSelector, setShowSelector] = useState(false);
 
-  const {loading, message, option, setMessage, setOption} = useFetch(coordx, coordy, imgDim.width, imgDim.height, setting.settingid, characters, setFoundCharactersCoords);
+  const {loading, message, option, setMessage, setOption} = useFetch(coordx, coordy, imgDim.width, imgDim.height, setting.settingid, characters, setFoundCharactersCoords, setFoundCharsIds);
   
   function handleClick(event) {
     if (mouseClickRef.current && !option) {

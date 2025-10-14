@@ -10,7 +10,8 @@ const PlacePointer = ({coordx, coordy}) => {
         transform: `translate(-50%, -50%)`
     };
     function handleClick(e) {
-        e.stopPropagation();
+        e.preventDefault();
+        // e.stopPropagation();
     }
 
     return (

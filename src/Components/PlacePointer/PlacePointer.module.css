@@ -1,6 +1,6 @@
 .Pointer {
   color: aqua;
-  pointer-events: none;
+  /* pointer-events: none; */
   border-radius: 50%;
   /* background-color: aquamarine; */
   cursor: text;

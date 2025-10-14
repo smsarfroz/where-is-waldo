@@ -5,7 +5,7 @@ import { Navigate, useParams } from "react-router-dom";
 import SettingImage from "../SettingImage/SettingImage.jsx";
 import { MdOutlineCancel } from "react-icons/md";
 import { useNavigate } from 'react-router-dom';
-import { v4 as uuidv4 } from 'uuid';
+import { IoCheckmarkDone } from "react-icons/io5";
 
 const VITE_BASE_URL =  import.meta.env.VITE_BASE_URL || '/api';
 
@@ -15,6 +15,7 @@ const Game = () => {
     const { settingsData } = useContext(waldoContext);
     const [time, setTime] = useState({minute: 0, second: 0});
     const { characters } = useContext(waldoContext);
+    const [foundCharsIds, setFoundCharsIds] = useState([]);
 
     let params = useParams();
     let gameid = params.id;
@@ -45,6 +46,9 @@ const Game = () => {
     function handleCancel() {
         navigate(`/games`);
     }
+    const doneStyle = {
+        border: '3px solid rgb(101, 219, 101)',
+    };
 
     return (
         <>
@@ -79,7 +83,9 @@ const Game = () => {
                                                             src={character.imglocation} 
                                                             alt="icon" 
                                                             className={styles.imgIcon}
+                                                            style={foundCharsIds.includes(character.charid) ? doneStyle: null}
                                                         />
+                                                        {foundCharsIds.includes(character.charid) ? <IoCheckmarkDone size={40} className={styles.checkmark}/> : null}
                                                         <div className={styles.charname}>
                                                             {character.charname}
                                                         </div>
@@ -96,7 +102,10 @@ const Game = () => {
                         </div>
 
                         <div className={styles.gameImage}>
-                            <SettingImage />
+                            <SettingImage 
+                                foundCharsIds = {foundCharsIds}
+                                setFoundCharsIds = {setFoundCharsIds}
+                            />
                         </div>
                     </div>
                 )

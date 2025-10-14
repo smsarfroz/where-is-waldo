@@ -113,6 +113,12 @@
     border-radius: 50%;
     width: 4.8em;
     cursor: pointer;
+
+}
+
+.checkmark {
+    color: rgb(101, 219, 101);
+    position: absolute;
 }
 
 .imgIcon:hover {
@@ -130,6 +136,11 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+
+.Timer {
+    padding-top: 0.5em;
+    padding-left: 1em;
 }
 
 .timerText {
