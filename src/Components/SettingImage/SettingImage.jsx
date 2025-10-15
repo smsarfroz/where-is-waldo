@@ -5,6 +5,7 @@ import Selector from "../Selector/Selector.jsx";
 import { waldoContext } from "../../waldoContext.js";
 import { useParams } from "react-router-dom";
 import PlacePointer from "../PlacePointer/PlacePointer.jsx";
+import WinDialog from "../WinDialog/WinDialog.jsx";
 const size = 20;
 
 const VITE_BASE_URL = import.meta.env.VITE_BASE_URL || "/api";
@@ -69,7 +70,7 @@ const useFetch = (coordx, coordy, width, height, settingid, characters, setFound
   return { loading, message, option, setMessage, setOption};
 };
 
-function SettingImage({foundCharsIds, setFoundCharsIds}) {
+function SettingImage({foundCharsIds, setFoundCharsIds, time}) {
   const mouseClickRef = useRef(null);
   const [coordx, setCoordx] = useState(null);
   const [coordy, setCoordy] = useState(null);
@@ -80,6 +81,7 @@ function SettingImage({foundCharsIds, setFoundCharsIds}) {
   const { characters } = useContext(waldoContext);
   const [TotCharacters, setTotCharacters] = useState(0);
 
+  // console.log("num ", foundCharactersCoords.length);
   const ref = useRef();
   useEffect(() => {
     if (!ref.current) return;
@@ -144,6 +146,7 @@ function SettingImage({foundCharsIds, setFoundCharsIds}) {
     }
 
   }
+
   const styleSelector = {
     transform: `translateY(-${imgDim.height}px) translate(-50%, -50%) translate(${coordx}px, ${coordy}px)`,
   };
@@ -173,12 +176,20 @@ function SettingImage({foundCharsIds, setFoundCharsIds}) {
               key={id}
               coordx={coord.coordx}
               coordy={coord.coordy}
+              imgDim={imgDim}
             /> 
           );
         }): 
         null
       }
-
+      {foundCharactersCoords.length == 1 ? 
+        <WinDialog 
+          time={time}
+          setFoundCharactersCoords={setFoundCharactersCoords}
+          setFoundCharsIds={setFoundCharsIds}
+        /> 
+        : null
+      }
       {(() => {
         if (loading) {
           return <p>Loading...</p>;
@@ -189,8 +200,7 @@ function SettingImage({foundCharsIds, setFoundCharsIds}) {
 
           return (
             <>
-              <p>{message}</p>
-              
+              <p>{message}</p>            
             </> 
           )
         } else {
@@ -203,6 +213,7 @@ function SettingImage({foundCharsIds, setFoundCharsIds}) {
               setOption={setOption}
               setShowSelector={setShowSelector}
               settingid={setting.settingid}
+              foundCharsIds={foundCharsIds}
             />
           );
         }

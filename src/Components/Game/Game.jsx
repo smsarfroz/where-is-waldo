@@ -47,7 +47,7 @@ const Game = () => {
         navigate(`/games`);
     }
     const doneStyle = {
-        border: '3px solid rgb(101, 219, 101)',
+        border: '3px solid rgba(25, 199, 103, 1)',
     };
 
     return (
@@ -103,8 +103,9 @@ const Game = () => {
 
                         <div className={styles.gameImage}>
                             <SettingImage 
-                                foundCharsIds = {foundCharsIds}
+                                foundCharsIds={foundCharsIds}
                                 setFoundCharsIds = {setFoundCharsIds}
+                                time={time}
                             />
                         </div>
                     </div>
