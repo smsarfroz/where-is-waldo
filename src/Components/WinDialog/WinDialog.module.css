@@ -1,13 +1,18 @@
 .winDialog {
     border: 2px solid black;
     position: absolute;
-    width: 20vw;
-    height: 20vh;
+    width: 50vw;
+    height: 50vh;
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
+    color: white;
+    /* background-color: black; */
+    background: rgba(31, 31, 31, 0.805);
+    font-family: 'Cormorant Garamond';
 }
 
-.text {
+/* .cancelButton:hover {
+    background-color: white;
     color: black;
-}
+} */

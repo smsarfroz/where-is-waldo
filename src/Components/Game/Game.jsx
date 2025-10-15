@@ -16,6 +16,7 @@ const Game = () => {
     const [time, setTime] = useState({minute: 0, second: 0});
     const { characters } = useContext(waldoContext);
     const [foundCharsIds, setFoundCharsIds] = useState([]);
+    const [gameOver, setGameOver] = useState(false);
 
     let params = useParams();
     let gameid = params.id;
@@ -23,18 +24,20 @@ const Game = () => {
     const setting = settingsData[id - 1];
 
     useEffect(() => {
-        const x = setInterval(() => {
-            setTime(prevTime => {
-                if (prevTime.second == 59) {
-                    return {minute: prevTime.minute + 1, second: 0};
-                }
-                return {minute: prevTime.minute, second: prevTime.second + 1};
-            });
+        if (!gameOver) {
+            const x = setInterval(() => {
+                setTime(prevTime => {
+                    if (prevTime.second == 59) {
+                        return {minute: prevTime.minute + 1, second: 0};
+                    }
+                    return {minute: prevTime.minute, second: prevTime.second + 1};
+                });
 
-        }, 1000);
+            }, 1000);
 
-        return () => clearInterval(x);
-    }, []); 
+            return () => clearInterval(x);
+        }
+    }, [gameOver]); 
 
     const style = {
         backgroundImage: `url(${setting.imglocation})`,
@@ -106,6 +109,8 @@ const Game = () => {
                                 foundCharsIds={foundCharsIds}
                                 setFoundCharsIds = {setFoundCharsIds}
                                 time={time}
+                                gameOver={gameOver}
+                                setGameOver={setGameOver}
                             />
                         </div>
                     </div>

@@ -20,6 +20,11 @@ const WinDialog = ({time, setFoundCharactersCoords, setFoundCharsIds}) => {
             <MdOutlineCancel size={30} className={styles.cancelButton} onClick={handleCancel}/>
 
             <p>You took {minute <= 9 ? 0: null}{minute}:{second <= 9 ? 0: null}{second}</p>
+            
+            <div>
+                <label htmlFor="">Name</label>
+                <input type="text" />
+            </div>
         </div>
     );
 };

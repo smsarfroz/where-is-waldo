@@ -70,7 +70,7 @@ const useFetch = (coordx, coordy, width, height, settingid, characters, setFound
   return { loading, message, option, setMessage, setOption};
 };
 
-function SettingImage({foundCharsIds, setFoundCharsIds, time}) {
+function SettingImage({foundCharsIds, setFoundCharsIds, time, gameOver, setGameOver}) {
   const mouseClickRef = useRef(null);
   const [coordx, setCoordx] = useState(null);
   const [coordy, setCoordy] = useState(null);
@@ -84,6 +84,9 @@ function SettingImage({foundCharsIds, setFoundCharsIds, time}) {
   // console.log("num ", foundCharactersCoords.length);
   const ref = useRef();
   useEffect(() => {
+    if (foundCharactersCoords.length == 1 && !gameOver) {
+      setGameOver(true);
+    }
     if (!ref.current) return;
 
     const resizeObserver = new ResizeObserver((entries) => {
@@ -99,7 +102,7 @@ function SettingImage({foundCharsIds, setFoundCharsIds, time}) {
     return () => {
       resizeObserver.disconnect();
     };
-  }, []);
+  }, [foundCharactersCoords, gameOver, setGameOver]);
 
   const { settingsData } = useContext(waldoContext);
   let params = useParams();
@@ -182,7 +185,7 @@ function SettingImage({foundCharsIds, setFoundCharsIds, time}) {
         }): 
         null
       }
-      {foundCharactersCoords.length == 1 ? 
+      {gameOver ? 
         <WinDialog 
           time={time}
           setFoundCharactersCoords={setFoundCharactersCoords}
