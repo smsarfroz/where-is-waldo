@@ -51,7 +51,8 @@ const useFetch = (coordx, coordy, width, height, settingid, characters, setFound
           setOption(null);
           if (response.message === "Success") {
             setFoundCharsIds(prevArray => [...prevArray, charid]);
-            setFoundCharactersCoords(prevArray => [...prevArray, {coordx: coordx, coordy: coordy}])
+            //in percentages
+            setFoundCharactersCoords(prevArray => [...prevArray, {coordx: (coordx/width)*100, coordy: (coordy/height)*100}])
           }
         })
         .catch((error) => {
@@ -84,7 +85,7 @@ function SettingImage({foundCharsIds, setFoundCharsIds, time, gameOver, setGameO
   // console.log("num ", foundCharactersCoords.length);
   const ref = useRef();
   useEffect(() => {
-    if (foundCharactersCoords.length == 1 && !gameOver) {
+    if (foundCharactersCoords.length == TotCharacters && !gameOver) {
       setGameOver(true);
     }
     if (!ref.current) return;
@@ -102,7 +103,7 @@ function SettingImage({foundCharsIds, setFoundCharsIds, time, gameOver, setGameO
     return () => {
       resizeObserver.disconnect();
     };
-  }, [foundCharactersCoords, gameOver, setGameOver]);
+  }, [foundCharactersCoords, gameOver, setGameOver, TotCharacters]);
 
   const { settingsData } = useContext(waldoContext);
   let params = useParams();
@@ -179,7 +180,6 @@ function SettingImage({foundCharsIds, setFoundCharsIds, time, gameOver, setGameO
               key={id}
               coordx={coord.coordx}
               coordy={coord.coordy}
-              imgDim={imgDim}
             /> 
           );
         }): 
@@ -208,7 +208,7 @@ function SettingImage({foundCharsIds, setFoundCharsIds, time, gameOver, setGameO
           )
         } else {
           return (
-            showSelector && 
+            showSelector && !gameOver && 
             <Selector
               style={styleSelector}
               style2={style2}
@@ -217,6 +217,9 @@ function SettingImage({foundCharsIds, setFoundCharsIds, time, gameOver, setGameO
               setShowSelector={setShowSelector}
               settingid={setting.settingid}
               foundCharsIds={foundCharsIds}
+              foundCharactersCoords={foundCharactersCoords}
+              coordx={coordx}
+              coordy={coordy}
             />
           );
         }

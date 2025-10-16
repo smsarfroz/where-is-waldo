@@ -10,9 +10,28 @@
     /* background-color: black; */
     background: rgba(31, 31, 31, 0.805);
     font-family: 'Cormorant Garamond';
+    /* border: 2px solid white; */
 }
 
 /* .cancelButton:hover {
     background-color: white;
     color: black;
 } */
+
+.container1 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.winTextContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.cancelButton {
+    position: absolute;
+    right: 0.6em;
+    top: 0.6em;
+}
