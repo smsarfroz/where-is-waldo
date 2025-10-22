@@ -190,6 +190,8 @@ function SettingImage({foundCharsIds, setFoundCharsIds, time, gameOver, setGameO
           time={time}
           setFoundCharactersCoords={setFoundCharactersCoords}
           setFoundCharsIds={setFoundCharsIds}
+          settingid={setting.settingid}
+          settingName={setting.name}
         /> 
         : null
       }

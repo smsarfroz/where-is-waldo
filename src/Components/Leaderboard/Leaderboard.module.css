@@ -1,0 +1,60 @@
+.leaderboardPage {
+    background-color: black;
+    color: white;
+    /* font-family: 'Cormorant Garamond'; */
+}
+
+.table {
+    border: 2px solid white;
+    width: 550px;
+}
+
+.leaderboardPage {
+    padding: 2em 4em;
+    display: flex;
+    flex-direction: column;
+    gap: 2em;
+    align-items: center;
+}
+
+.row {
+    /* display: flex; */
+    /* align-items: center; */
+    gap: 1em;
+    display: grid;
+    grid-template-columns: 1fr 9.5fr 1fr;
+    justify-self: start;
+}
+
+.heading {
+    display: flex;
+    /* justify-content: center; */
+    align-items: center;
+    width: 100%; 
+    /* border: 2px solid red;  */
+    font-family: 'Cormorant Garamond';
+}
+
+.title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1em;
+    font-family: 'Cormorant Garamond';
+}
+
+.verticalLine {
+    /* border: 2px solid red;  */
+    margin: 0.1em 0.7em;
+    width: 100%;
+    border-left: 2px solid #f2f2f2;
+    display: flex;
+    justify-content: center;
+    font-weight: bold;
+    font-size: large;
+}
+
+.horizontalLine {
+    height: 2px;
+    background-color: white;
+}

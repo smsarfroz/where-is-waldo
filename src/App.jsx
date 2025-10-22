@@ -20,8 +20,10 @@ const VITE_BASE_URL =  import.meta.env.VITE_BASE_URL || '/api';
 const useFetchData = () => {
   const api1 = `${VITE_BASE_URL}/settings`;
   const api2 = `${VITE_BASE_URL}/characters`;
+  const api3 = `${VITE_BASE_URL}/leaderboard`;
   const [settingsData, setSettingsData] = useState(null);
   const [characters, setCharacters] = useState(null);
+  const [Leaderboard, setLeaderboard] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -29,9 +31,10 @@ const useFetchData = () => {
     const fetchData = async () => {
       try {
         
-        const [res1, res2] = await Promise.all([
+        const [res1, res2, res3] = await Promise.all([
           fetch(api1),
-          fetch(api2)
+          fetch(api2),
+          fetch(api3)
         ]); 
 
         if (!res1.ok) {
@@ -40,12 +43,17 @@ const useFetchData = () => {
         if (!res2.ok) {
           throw new Error(`HTTP error! Status: ${Response.status}`);
         }
+        if (!res3.ok) {
+          throw new Error(`HTTP error! Status: ${Response.status}`);
+        }
         
         const data1 = await res1.json();
         const data2 = await res2.json();
+        const data3 = await res3.json();
 
         setSettingsData(data1);
         setCharacters(data2);
+        setLeaderboard(data3);
         
         setLoading(false);
     
@@ -54,13 +62,13 @@ const useFetchData = () => {
       };
     };
     fetchData();
-  }, [api1, api2]);
+  }, [api1, api2, api3]);
 
-  return {loading, error, settingsData, characters};
+  return {loading, error, settingsData, characters, Leaderboard};
 };
 
 function App() {
-  const { loading, error, settingsData, characters } = useFetchData();
+  const { loading, error, settingsData, characters, Leaderboard } = useFetchData();
 
   if (loading) {
     return <Loading />;
@@ -81,14 +89,14 @@ function App() {
           <div className='navigation'>
             <Link to='/'>HOME</Link>
             <Link to='/games'>GAMES</Link>
-            <Link>LEADERBOARD</Link>
-            <Link>ABOUT</Link>
+            <Link to='/leaderboard'>LEADERBOARD</Link>
+            <Link to='/about'>ABOUT</Link>
           </div>
         </div>
       </nav>
       <hr className="lineBreak"/>
 
-      <waldoContext.Provider value={{settingsData, characters}}>
+      <waldoContext.Provider value={{settingsData, characters, Leaderboard}}>
         <Outlet />  
       </waldoContext.Provider>
 
