@@ -63,8 +63,8 @@ const Leaderboard = () => {
   return (
       <div className={styles.leaderboardPage}>
           <div className={styles.title}>
-              <GrTrophy size={30}/>
-              <h1>Leaderboards</h1>
+              <GrTrophy size={50}/>
+              <p className={styles.titleName}>Leaderboards</p>
           </div>
           {
               Leaderboard.map((board, i) => {
@@ -84,12 +84,20 @@ const Leaderboard = () => {
                                       <div className={styles.row}>
                                           <CiUser size={42}/>
                                           <div>
-                                              <p>{arr.timeStamp}</p>
-                                              {/* <p>{new Intl.DateTimeFormat('en-US', {year: 'numeric', month: '2-digit',day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit'}).format(arr.timeStamp)}</p> */}
+                                              {/* <p className={styles.timeStamp}>{arr.timeStamp}</p> */}
+                                              <p className={styles.timeStamp}>{new Date(arr.timeStamp).toLocaleString("en-US",
+                                                {
+                                                  month: "short",
+                                                  day: "2-digit",
+                                                  year: "numeric",
+                                                  hour: '2-digit',
+                                                  minute: '2-digit'
+                                                })}
+                                              </p>
                                               <p>{arr.userName}</p>
                                           </div>
                                           <div>
-                                              <p>Time</p>
+                                              <b>Time</b>
                                               <p>{arr.timeTaken}</p>
                                           </div>
                                       </div>

@@ -1,7 +1,6 @@
 .leaderboardPage {
     background-color: black;
     color: white;
-    /* font-family: 'Cormorant Garamond'; */
 }
 
 .table {
@@ -18,21 +17,23 @@
 }
 
 .row {
-    /* display: flex; */
-    /* align-items: center; */
     gap: 1em;
     display: grid;
     grid-template-columns: 1fr 9.5fr 1fr;
     justify-self: start;
+    padding: 0 0.4em;
+    align-items: center;
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    height: 3.7em;
 }
 
 .heading {
     display: flex;
-    /* justify-content: center; */
     align-items: center;
     width: 100%; 
-    /* border: 2px solid red;  */
     font-family: 'Cormorant Garamond';
+    height: 3.6em;
+    padding: 0 0.4em;
 }
 
 .title {
@@ -44,17 +45,24 @@
 }
 
 .verticalLine {
-    /* border: 2px solid red;  */
     margin: 0.1em 0.7em;
     width: 100%;
     border-left: 2px solid #f2f2f2;
     display: flex;
     justify-content: center;
     font-weight: bold;
-    font-size: large;
+    font-size: 1.3em
 }
 
 .horizontalLine {
     height: 2px;
     background-color: white;
+}
+
+.timeStamp {
+    color: rgb(212, 212, 212);
+}
+
+.titleName {
+    font-size: 3.3em;
 }
