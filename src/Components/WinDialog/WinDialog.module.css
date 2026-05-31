@@ -111,3 +111,10 @@ input {
     background: rgba(51, 170, 51, .4);
     font-size: 1.1em;
 }
+
+.movetoLink {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: orange;
+}

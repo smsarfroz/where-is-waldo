@@ -15,6 +15,7 @@ const Game = () => {
     const { settingsData } = useContext(waldoContext);
     const [time, setTime] = useState({minute: 0, second: 0});
     const { characters } = useContext(waldoContext);
+    // console.log('characters', characters);
     const [foundCharsIds, setFoundCharsIds] = useState([]);
     const [gameOver, setGameOver] = useState(false);
 
@@ -22,6 +23,7 @@ const Game = () => {
     let gameid = params.id;
     let id = parseInt(gameid);
     const setting = settingsData[id - 1];
+    const settingid = setting.settingid;
 
     useEffect(() => {
         if (!gameOver) {
@@ -52,6 +54,22 @@ const Game = () => {
     const doneStyle = {
         border: '3px solid rgba(25, 199, 103, 1)',
     };
+
+    const credits = () => {
+        switch(settingid) {
+            case 1: 
+                return {name: 'Gio Calistro', link: 'https://www.reddit.com/r/wimmelbilder/comments/1dexkvw/inspired_by_ancient_greece_and_mythology_by_me/'};
+            case 2:
+                return {name: 'By Zurgetron', link: 'https://www.reddit.com/r/wimmelbilder/comments/1kuje3y/sinister_citadel_digital_by_me/#lightbox'};
+            case 3:
+                return {name: 'Darrow Pinup', link: 'https://www.reddit.com/r/wimmelbilder/comments/1m9bkds/geof_darrow_pinup_in_the_simpsons_tree_house_of/'};
+            case 4:
+                return {name: 'sara', link: 'https://imgur.com/gallery/lets-play-some-wheres-waldo-8exqx'}
+            default: 
+                return {name: 'author', link: ''};
+        }
+    };
+    const credit = credits();
 
     return (
         <>
@@ -112,6 +130,9 @@ const Game = () => {
                                 gameOver={gameOver}
                                 setGameOver={setGameOver}
                             />
+                            <figcaption style={{ fontSize: '0.85rem', color: '#666' }}>
+                                Photo by <a href={credit.link} target="_blank" rel="noreferrer">{credit.name}</a> on {settingid == 4 ? 'imgur': 'Reddit'}.
+                            </figcaption>
                         </div>
                     </div>
                 )

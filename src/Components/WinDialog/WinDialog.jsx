@@ -84,7 +84,7 @@ const WinDialog = ({time, setFoundCharactersCoords, setFoundCharsIds, settingid,
                                 {responseData.message}
                             </div> 
 
-                            <Link to='/leaderboard'>Move to Leaderboards</Link>
+                            <Link to='/leaderboard' className={styles.movetoLink}>Move to Leaderboards</Link>
                         </> :
 
                         <>

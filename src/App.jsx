@@ -90,7 +90,7 @@ function App() {
             <Link to='/'>HOME</Link>
             <Link to='/games'>GAMES</Link>
             <Link to='/leaderboard'>LEADERBOARD</Link>
-            <Link to='/about'>ABOUT</Link>
+            {/* <Link to='/about'>ABOUT</Link> */}
           </div>
         </div>
       </nav>

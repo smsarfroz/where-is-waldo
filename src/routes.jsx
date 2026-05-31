@@ -25,7 +25,7 @@ const routes = [
             {
                 path: `/leaderboard`,
                 element: <Leaderboard />
-            }
+            },
         ],
         errorElement: <ErrorPage />
     }

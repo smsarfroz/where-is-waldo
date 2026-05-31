@@ -6,7 +6,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 const Games = () => {
     const { settingsData } = useContext(waldoContext);
-    // console.log("settingsData ", settingsData);
+    console.log("settingsData ", settingsData);
     return (
         <div className={styles.container}>
             <p className={styles.Title}>Which game would you like to play?</p>

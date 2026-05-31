@@ -76,7 +76,7 @@ body, #root, .content{
     display: flex;
     gap: 2.5vw;
     align-items: center;
-    margin-left: 25vw;
+    margin-left: 30vw;
     margin-right: 30vw;
 }
 
