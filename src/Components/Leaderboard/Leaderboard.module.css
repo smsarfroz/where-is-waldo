@@ -1,6 +1,17 @@
+@keyframes animateBackground {
+    0% {
+        opacity: 0.9;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
 .leaderboardPage {
     background-color: black;
     color: white;
+
+    animation: animateBackground 0.7s ease-in;
 }
 
 .table {

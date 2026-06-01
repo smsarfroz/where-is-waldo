@@ -1,6 +1,6 @@
 .winDialog {
     border: 2px solid white;
-    position: absolute;
+    position: fixed;
     width: 50vw;
     height: 50vh;
     left: 50%;
@@ -106,10 +106,10 @@ input {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 3em;
+    height: 5em;
     font-weight: bold;
     background: rgba(51, 170, 51, .4);
-    font-size: 1.1em;
+    font-size: 2em;
 }
 
 .movetoLink {
@@ -117,4 +117,6 @@ input {
     justify-content: center;
     align-items: center;
     color: orange;
+    margin-top: 1.6vw;
+    font-size: 1.6em;
 }

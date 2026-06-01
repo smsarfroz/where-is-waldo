@@ -79,7 +79,7 @@ const WinDialog = ({time, setFoundCharactersCoords, setFoundCharsIds, settingid,
                 <>
                     {
                         responseData ? 
-                        <>                
+                        <>
                             <div className={styles.successBanner}>
                                 {responseData.message}
                             </div> 

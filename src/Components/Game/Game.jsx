@@ -6,6 +6,7 @@ import SettingImage from "../SettingImage/SettingImage.jsx";
 import { MdOutlineCancel } from "react-icons/md";
 import { useNavigate } from 'react-router-dom';
 import { IoCheckmarkDone } from "react-icons/io5";
+import WinDialog from "../WinDialog/WinDialog.jsx";
 
 const VITE_BASE_URL =  import.meta.env.VITE_BASE_URL || '/api';
 
@@ -134,6 +135,17 @@ const Game = () => {
                                 Photo by <a href={credit.link} target="_blank" rel="noreferrer">{credit.name}</a> on {settingid == 4 ? 'imgur': 'Reddit'}.
                             </figcaption>
                         </div>
+
+                        {/* {gameOver ? 
+                            <WinDialog 
+                            time={time}
+                            // setFoundCharactersCoords={setFoundCharactersCoords}
+                            setFoundCharsIds={setFoundCharsIds}
+                            settingid={setting.settingid}
+                            settingName={setting.name}
+                            /> 
+                            : null
+                        } */}
                     </div>
                 )
             }

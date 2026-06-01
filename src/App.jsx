@@ -86,6 +86,7 @@ function App() {
       <nav>
         <div className="navContent">
           <img src={logo} alt="" className='logo'/>
+          <p className='gameHeading'>Where's the Character ?</p>
           <div className='navigation'>
             <Link to='/'>HOME</Link>
             <Link to='/games'>GAMES</Link>
@@ -100,9 +101,9 @@ function App() {
         <Outlet />  
       </waldoContext.Provider>
 
-      <footer>
+      {/* <footer>
 
-      </footer>
+      </footer> */}
     </div>
   )
 }
