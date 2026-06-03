@@ -98,7 +98,7 @@ const WinDialog = ({time, setFoundCharactersCoords, setFoundCharsIds, settingid,
                             <form>
                                 <PiSignatureLight size={30} className={styles.icon}/>
                                 <input type="text" id='name' value={userName} onChange={handleChange} className={styles.nameInput} placeholder='Username'/>
-                                <AiOutlineSend size={30} onClick={onSubmit} className={styles.icon}/>
+                                <AiOutlineSend size={30} onClick={onSubmit} className={styles.sendIcon}/>
                             </form>
                         </>
                     }

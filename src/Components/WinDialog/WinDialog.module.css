@@ -57,6 +57,17 @@ form {
     padding-left: 1.5em;
     color: white;
 }
+.nameInput:hover {
+    color: black;
+}
+
+form:hover .nameInput {
+    color: black;
+}
+
+.sendIcon:hover {
+    color: black;
+}
 input:focus {
     outline: none;
     background-color: transparent;
@@ -119,4 +130,8 @@ input {
     color: orange;
     margin-top: 1.6vw;
     font-size: 1.6em;
+}
+
+* {
+    /* border: 1px solid blue; */
 }
