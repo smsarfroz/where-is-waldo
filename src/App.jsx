@@ -76,7 +76,7 @@ function App() {
     // return <p>Loading...</p>;
   }
   if (error) {
-    // console.log("error ", error);
+    console.log("error ", error);
     return <ErrorPage />;
   }
 
