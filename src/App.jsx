@@ -59,6 +59,7 @@ const useFetchData = () => {
     
       } catch (error) {
         setError(error);
+        setLoading(false);
       };
     };
     fetchData();
