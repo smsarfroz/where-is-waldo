@@ -1,5 +1,5 @@
 .Home {
-    background-image: url('public/canvas.png');
+    background-image: url('/canvas.png');
     /* background-size: cover; */
     object-fit: cover;
     background-position: center;
