@@ -37,6 +37,8 @@ const useFetchData = () => {
           fetch(api3)
         ]); 
         
+        console.log('res1', res1);
+
         if (!res1.ok) {
           throw new Error(`HTTP error! Status: ${Response.status}`);
         } 
@@ -47,9 +49,6 @@ const useFetchData = () => {
           throw new Error(`HTTP error! Status: ${Response.status}`);
         }
         
-        const data = await res1.text();
-        console.log('res1.text', data);
-
         const data1 = await res1.json();
         const data2 = await res2.json();
         const data3 = await res3.json();
