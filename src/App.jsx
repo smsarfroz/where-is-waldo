@@ -32,9 +32,27 @@ const useFetchData = () => {
       try {
         
         const [res1, res2, res3] = await Promise.all([
-          fetch(api1),
-          fetch(api2),
-          fetch(api3)
+          fetch(api1, {
+            mode: 'cors',
+            method: 'get',
+            headers: {
+                'Accept': 'application/json' 
+            },
+          }),
+          fetch(api2, {
+            mode: 'cors',
+            method: 'get',
+            headers: {
+                'Accept': 'application/json' 
+            },
+          }),
+          fetch(api3, {
+            mode: 'cors',
+            method: 'get',
+            headers: {
+                'Accept': 'application/json' 
+            },
+          })
         ]); 
         
         console.log('res1', res1);
