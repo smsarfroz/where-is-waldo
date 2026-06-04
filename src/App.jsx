@@ -102,9 +102,9 @@ function App() {
         <Outlet />  
       </waldoContext.Provider>
 
-      <footer>
+      {/* <footer>
 
-      </footer>
+      </footer> */}
     </div>
   )
 }

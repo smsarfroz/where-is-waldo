@@ -108,7 +108,8 @@ nav {
 footer {
     position: absolute;
     bottom: 0;
-    top: 100%;
+    /* left: 0; */
+    /* top: 130%; */
     background-color: #F9C349;
     height: 4vw;
     width: 100%;
@@ -142,5 +143,4 @@ footer {
 .app-container {
   display: flex;
   flex-direction: column;
-  min-height: 100dvh;
 }
