@@ -2,7 +2,7 @@ import './App.css';
 import SettingImage from './Components/SettingImage/SettingImage.jsx';
 import { Outlet, useLocation } from 'react-router-dom';
 import { Link } from 'react-router-dom';
-import logo from './assets/waldo-icon.png';
+import logo from 'public/waldo-icon.png';
 import { useState } from 'react';
 import "@fontsource/cormorant-garamond";
 import '@fontsource/nunito-sans';
