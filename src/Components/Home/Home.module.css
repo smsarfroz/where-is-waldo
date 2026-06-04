@@ -107,11 +107,3 @@ ol li {
     margin-right: auto;
 }
 
-footer {
-    position: relative;
-    bottom: 0;
-    top: 100%;
-    background-color: #F9C349;
-    height: 4vw;
-    width: 100%;
-}

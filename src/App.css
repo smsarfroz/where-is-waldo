@@ -55,6 +55,7 @@ h1, h2, h3, h4, h5, h6 {
 
 body, #root, .content{
    min-height: 100vh;
+   background-color: black;
 }
 
 * {
@@ -104,6 +105,15 @@ nav {
     width: 100%;
 } */
 
+footer {
+    position: absolute;
+    bottom: 0;
+    top: 100%;
+    background-color: #F9C349;
+    height: 4vw;
+    width: 100%;
+}
+
 .lineBreak {
   height: 0.8px;
   border: none;
@@ -120,4 +130,17 @@ nav {
 
 * {
   /* border: 1px solid blue; */
+}
+
+.loadingText {
+    position: relative;
+    color: white;
+    top: 50%;
+    left: 50%;
+}
+
+.app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
 }

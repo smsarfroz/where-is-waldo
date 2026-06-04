@@ -50,8 +50,8 @@ const Leaderboard = () => {
   const { loading, error, Leaderboard } = useFetchData();
 
   if (loading) {
-    return <Loading />;
-    // return <p>Loading...</p>;
+    // return <Loading />;
+    return <p className={styles.loadingText}>Loading...</p>;
   }
   if (error) {
     // console.log("error ", error);

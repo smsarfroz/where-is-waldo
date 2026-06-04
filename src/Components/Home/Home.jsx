@@ -23,8 +23,7 @@ const Home = () => {
                     </Link>
                 </div>
             </div>
-            <footer>
-            </footer>
+            
         </div>
     );
 };

@@ -32,39 +32,19 @@ const useFetchData = () => {
       try {
         
         const [res1, res2, res3] = await Promise.all([
-          fetch(api1, {
-            mode: 'cors',
-            method: 'get',
-            headers: {
-                'Accept': 'application/json' 
-            },
-          }),
-          fetch(api2, {
-            mode: 'cors',
-            method: 'get',
-            headers: {
-                'Accept': 'application/json' 
-            },
-          }),
-          fetch(api3, {
-            mode: 'cors',
-            method: 'get',
-            headers: {
-                'Accept': 'application/json' 
-            },
-          })
+          fetch(api1),
+          fetch(api2),
+          fetch(api3)
         ]); 
         
-        console.log('res1', res1);
-
         if (!res1.ok) {
-          throw new Error(`HTTP error! Status: ${Response.status}`);
+          throw new Error(`HTTP error! Status: ${res1.status}`);
         } 
         if (!res2.ok) {
-          throw new Error(`HTTP error! Status: ${Response.status}`);
+          throw new Error(`HTTP error! Status: ${res2.status}`);
         }
         if (!res3.ok) {
-          throw new Error(`HTTP error! Status: ${Response.status}`);
+          throw new Error(`HTTP error! Status: ${res3.status}`);
         }
         
         const data1 = await res1.json();
@@ -92,8 +72,8 @@ function App() {
   const { loading, error, settingsData, characters, Leaderboard } = useFetchData();
 
   if (loading) {
-    return <Loading />;
-    // return <p>Loading...</p>;
+    // return <Loading />;
+    return <p className="loadingText">Loading...</p>;
   }
   if (error) {
     console.log("error ", error);
@@ -102,7 +82,7 @@ function App() {
 
 
   return (
-    <div>
+    <div className='app-container'>
 
       <nav>
         <div className="navContent">
@@ -122,9 +102,9 @@ function App() {
         <Outlet />  
       </waldoContext.Provider>
 
-      {/* <footer>
+      <footer>
 
-      </footer> */}
+      </footer>
     </div>
   )
 }
