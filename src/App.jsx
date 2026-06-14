@@ -10,9 +10,12 @@ import { waldoContext } from './waldoContext.js';
 import ErrorPage from './ErrorPage.jsx';
 import Loading from './Components/Loading/Loading.jsx';
 import { useEffect } from 'react';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/ReactToastify.css';
 
 import { Trefoil } from 'ldrs/react'
 import 'ldrs/react/Trefoil.css'
+import getErrorMessage from './utils/getErrorMessage.js';
 
 const VITE_BASE_URL =  import.meta.env.VITE_BASE_URL || '/api';
 // console.log(VITE_BASE_URL);
@@ -38,12 +41,15 @@ const useFetchData = () => {
         ]); 
         
         if (!res1.ok) {
+          toast.error(getErrorMessage(res1.status));
           throw new Error(`HTTP error! Status: ${res1.status}`);
         } 
         if (!res2.ok) {
+          toast.error(getErrorMessage(res1.status));
           throw new Error(`HTTP error! Status: ${res2.status}`);
         }
         if (!res3.ok) {
+          toast.error(getErrorMessage(res1.status));
           throw new Error(`HTTP error! Status: ${res3.status}`);
         }
         
@@ -60,6 +66,7 @@ const useFetchData = () => {
       } catch (error) {
         setError(error);
         setLoading(false);
+        toast.error(`There was a problem with fetch operation`);
       };
     };
     fetchData();
@@ -83,7 +90,7 @@ function App() {
 
   return (
     <div className='app-container'>
-
+      <ToastContainer position="top-center" autoClose={2000} />  
       <nav>
         <div className="navContent">
           <img src={logo} alt="" className='logo'/>

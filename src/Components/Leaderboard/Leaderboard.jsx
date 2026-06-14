@@ -7,6 +7,8 @@ import { GrTrophy } from "react-icons/gr";
 import { useEffect } from 'react';
 import Loading from '../Loading/Loading.jsx';
 import ErrorPage from '../../ErrorPage.jsx';
+import { toast } from 'react-toastify';
+import getErrorMessage from '../../utils/getErrorMessage.js';
 
 const VITE_BASE_URL =  import.meta.env.VITE_BASE_URL || '/api';
 // console.log(VITE_BASE_URL);
@@ -25,8 +27,9 @@ const useFetchData = () => {
           fetch(api),
         ]); 
 
-        if (!res) {
-          throw new Error(`HTTP error! Status: ${Response.status}`);
+        if (!res.ok) {
+          toast.error(getErrorMessage(res.status));
+          throw new Error(`HTTP error! Status: ${res.status}`);
         } 
         
         const data = await res.json();
@@ -36,6 +39,7 @@ const useFetchData = () => {
         setLoading(false);
     
       } catch (error) {
+        toast.error(`There was a problem with fetch operation.`);
         setError(error);
       };
     };

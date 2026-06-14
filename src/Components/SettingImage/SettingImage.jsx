@@ -6,6 +6,9 @@ import { waldoContext } from "../../waldoContext.js";
 import { useParams } from "react-router-dom";
 import PlacePointer from "../PlacePointer/PlacePointer.jsx";
 import WinDialog from "../WinDialog/WinDialog.jsx";
+import { toast } from "react-toastify";
+import getErrorMessage from "../../utils/getErrorMessage.js";
+
 const size = 20;
 
 const VITE_BASE_URL = import.meta.env.VITE_BASE_URL || "/api";
@@ -41,6 +44,7 @@ const useFetch = (coordx, coordy, width, height, settingid, characters, setFound
         .then((response) => {
           setLoading(true);
           if (!response.ok) {
+            toast.error(getErrorMessage(response.status));
             throw new Error(`HTTP error! status: ${response.status}`);
           }
           return response.json();
@@ -63,6 +67,7 @@ const useFetch = (coordx, coordy, width, height, settingid, characters, setFound
             `There was a problem with the fetch operation: `,
             error
           );
+          toast.error(`There was a problem with the fetch operation`);
         });
     } else if (option == 'Cancel') {
       setOption(null);

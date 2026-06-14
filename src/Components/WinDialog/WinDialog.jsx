@@ -5,6 +5,8 @@ import { useNavigate } from 'react-router-dom';
 import { PiSignatureLight } from "react-icons/pi";
 import { AiOutlineSend } from "react-icons/ai";
 import { Link } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import getErrorMessage from '../../utils/getErrorMessage';
 
 const VITE_BASE_URL = import.meta.env.VITE_BASE_URL || "/api";
 const WinDialog = ({time, setFoundCharactersCoords, setFoundCharsIds, settingid, settingName}) => {
@@ -50,6 +52,7 @@ const WinDialog = ({time, setFoundCharactersCoords, setFoundCharsIds, settingid,
             
             console.log("response ", response);
             if (!response.ok) {
+                toast.error(getErrorMessage(response.status));
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
 
@@ -58,6 +61,7 @@ const WinDialog = ({time, setFoundCharactersCoords, setFoundCharsIds, settingid,
             console.log("data ", responseData);
             setResponseData(responseData);
         } catch (error) {
+            toast.error(getErrorMessage(`There was a problem with fetch operation`));
             console.error(`There was a problem with fetch operation `, error);
             setError(error);
             throw error;
