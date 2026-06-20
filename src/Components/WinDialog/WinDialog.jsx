@@ -39,7 +39,7 @@ const WinDialog = ({time, setFoundCharactersCoords, setFoundCharsIds, settingid,
         
         // console.log("data ", data);
         try {
-            console.log("here");
+            // console.log("here");
             const response = await fetch(api, {
                 mode: 'cors',
                 method: 'post',
@@ -50,7 +50,7 @@ const WinDialog = ({time, setFoundCharactersCoords, setFoundCharsIds, settingid,
             });
             setLoading(true);
             
-            console.log("response ", response);
+            // console.log("response ", response);
             if (!response.ok) {
                 toast.error(getErrorMessage(response.status));
                 throw new Error(`HTTP error! status: ${response.status}`);
@@ -58,12 +58,13 @@ const WinDialog = ({time, setFoundCharactersCoords, setFoundCharsIds, settingid,
 
             const responseData = await response.json();
 
-            console.log("data ", responseData);
+            // console.log("data ", responseData);
             setResponseData(responseData);
         } catch (error) {
             toast.error(getErrorMessage(`There was a problem with fetch operation`));
             console.error(`There was a problem with fetch operation `, error);
             setError(error);
+        
             throw error;
         } finally {
             setLoading(false);

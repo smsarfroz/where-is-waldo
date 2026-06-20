@@ -216,7 +216,6 @@ NODE_ENV=production npm start
 - Multiple game settings/levels available
 - Dynamic image loading from database
 - Comprehensive coordinate normalization across screen sizes
-- Fully responsive design
 
 ## License
 
