@@ -6,23 +6,34 @@ import { waldoContext } from "../../waldoContext.js";
 import { useParams } from "react-router-dom";
 import PlacePointer from "../PlacePointer/PlacePointer.jsx";
 import WinDialog from "../WinDialog/WinDialog.jsx";
-import { toast } from "react-toastify";
+// import { toast } from "react-toastify";
 import getErrorMessage from "../../utils/getErrorMessage.js";
+import toast, { Toaster } from 'react-hot-toast';
+
 
 const size = 20;
 
 const VITE_BASE_URL = import.meta.env.VITE_BASE_URL || "/api";
-const useFetch = (coordx, coordy, width, height, settingid, characters, setFoundCharactersCoords, setFoundCharsIds) => {
+const useFetch = (
+  coordx,
+  coordy,
+  width,
+  height,
+  settingid,
+  characters,
+  setFoundCharactersCoords,
+  setFoundCharsIds,
+) => {
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState(null);
   const [option, setOption] = useState(null);
-  
+
   useEffect(() => {
     const xpercent = (coordx / width) * 100;
     const ypercent = (coordy / height) * 100;
 
     let charid = 0;
-    characters.map(character => {
+    characters.map((character) => {
       if (character.charname === option) {
         charid = character.charid;
       }
@@ -32,8 +43,10 @@ const useFetch = (coordx, coordy, width, height, settingid, characters, setFound
     data["xpercentu"] = xpercent;
     data["ypercentu"] = ypercent;
 
-    if (option && option != 'Cancel') {
-      fetch(`${VITE_BASE_URL}/settings/${settingid}/verify/${charid}`, {
+    // console.log('data', data);
+
+    if (option && option != "Cancel") {
+      const myPromise = fetch(`${VITE_BASE_URL}/settings/${settingid}/verify/${charid}`, {
         mode: "cors",
         method: "post",
         headers: {
@@ -43,6 +56,7 @@ const useFetch = (coordx, coordy, width, height, settingid, characters, setFound
       })
         .then((response) => {
           setLoading(true);
+          
           if (!response.ok) {
             toast.error(getErrorMessage(response.status));
             throw new Error(`HTTP error! status: ${response.status}`);
@@ -54,9 +68,18 @@ const useFetch = (coordx, coordy, width, height, settingid, characters, setFound
           setMessage(response.message);
           setOption(null);
           if (response.message === "Success") {
-            setFoundCharsIds(prevArray => [...prevArray, charid]);
+            setFoundCharsIds((prevArray) => [...prevArray, charid]);
             //in percentages
-            setFoundCharactersCoords(prevArray => [...prevArray, {coordx: (coordx/width)*100, coordy: (coordy/height)*100}])
+            setFoundCharactersCoords((prevArray) => [
+              ...prevArray,
+              {
+                coordx: (coordx / width) * 100,
+                coordy: (coordy / height) * 100,
+              },
+            ]);
+            toast.success("Character found successfully!");
+          } else {
+            toast.error("Sorry, that's not the character");
           }
         })
         .catch((error) => {
@@ -65,22 +88,43 @@ const useFetch = (coordx, coordy, width, height, settingid, characters, setFound
           setOption(null);
           console.error(
             `There was a problem with the fetch operation: `,
-            error
+            error,
           );
           toast.error(`There was a problem with the fetch operation`);
         });
-    } else if (option == 'Cancel') {
+
+      toast.promise(myPromise, {
+        loading: 'Checking...',
+      })
+    } else if (option == "Cancel") {
       setOption(null);
     }
-  }, [characters, coordx, coordy, height, message, option, setFoundCharactersCoords, settingid, width, setFoundCharsIds]);
-  return { loading, message, option, setMessage, setOption};
+  }, [
+    characters,
+    coordx,
+    coordy,
+    height,
+    message,
+    option,
+    setFoundCharactersCoords,
+    settingid,
+    width,
+    setFoundCharsIds,
+  ]);
+  return { loading, message, option, setMessage, setOption };
 };
 
-function SettingImage({foundCharsIds, setFoundCharsIds, time, gameOver, setGameOver}) {
+function SettingImage({
+  foundCharsIds,
+  setFoundCharsIds,
+  time,
+  gameOver,
+  setGameOver,
+}) {
   const mouseClickRef = useRef(null);
   const [coordx, setCoordx] = useState(null);
   const [coordy, setCoordy] = useState(null);
-  const [imgDim, setImgDim] = useState({ width: 1200, height: 700});
+  const [imgDim, setImgDim] = useState({ width: 1200, height: 700 });
   const [left, setLeft] = useState(true);
   const [up, setUp] = useState(true);
   const [foundCharactersCoords, setFoundCharactersCoords] = useState([]);
@@ -99,7 +143,7 @@ function SettingImage({foundCharsIds, setFoundCharsIds, time, gameOver, setGameO
       const entry = entries[0];
       setImgDim({
         width: entry.contentRect.width,
-        height: entry.contentRect.height
+        height: entry.contentRect.height,
       });
     });
 
@@ -117,7 +161,7 @@ function SettingImage({foundCharsIds, setFoundCharsIds, time, gameOver, setGameO
   const setting = settingsData[id - 1];
 
   let tmp = 0;
-  characters.map(character => {
+  characters.map((character) => {
     if (character.settingid == setting.settingid) {
       tmp++;
     }
@@ -128,8 +172,17 @@ function SettingImage({foundCharsIds, setFoundCharsIds, time, gameOver, setGameO
 
   const [showSelector, setShowSelector] = useState(false);
 
-  const {loading, message, option, setMessage, setOption} = useFetch(coordx, coordy, imgDim.width, imgDim.height, setting.settingid, characters, setFoundCharactersCoords, setFoundCharsIds);
-  
+  const { loading, message, option, setMessage, setOption } = useFetch(
+    coordx,
+    coordy,
+    imgDim.width,
+    imgDim.height,
+    setting.settingid,
+    characters,
+    setFoundCharactersCoords,
+    setFoundCharsIds,
+  );
+
   function handleClick(event) {
     if (mouseClickRef.current && !option) {
       setShowSelector(true);
@@ -151,9 +204,8 @@ function SettingImage({foundCharsIds, setFoundCharsIds, time, gameOver, setGameO
         setUp(false);
       } else {
         setUp(true);
-      }  
+      }
     }
-
   }
 
   const styleSelector = {
@@ -170,12 +222,19 @@ function SettingImage({foundCharsIds, setFoundCharsIds, time, gameOver, setGameO
       `,
   };
 
+  // console.log("foundCharactersCoords", foundCharactersCoords);
+
   return (
     <div ref={mouseClickRef} onClick={handleClick} className={styles.Image}>
-      <img 
+      <Toaster 
+        toastOptions={{
+          duration: 1800,
+        }}
+      />
+      <img
         ref={ref}
-        src={setting.imglocation} 
-        alt="Game scene" 
+        src={setting.imglocation}
+        alt="Game scene"
         className={styles.imgtag}
       />
       {foundCharactersCoords && foundCharactersCoords.length > 0 ? 
@@ -190,44 +249,45 @@ function SettingImage({foundCharsIds, setFoundCharsIds, time, gameOver, setGameO
         }): 
         null
       }
-      {gameOver ? 
-        <WinDialog 
+      {gameOver ? (
+        <WinDialog
           time={time}
           setFoundCharactersCoords={setFoundCharactersCoords}
           setFoundCharsIds={setFoundCharsIds}
           settingid={setting.settingid}
           settingName={setting.name}
-        /> 
-        : null
-      }
+        />
+      ) : null}
       {(() => {
         if (loading) {
-          return <p>Loading...</p>;
+          // return <p>Loading...</p>;
         } else if (message) {
           setTimeout(() => {
             setMessage(null);
           }, 2000);
 
-          return (
-            <>
-              <p>{message}</p>            
-            </> 
-          )
+          // return (
+          //   <>
+          //     <p>{message}</p>
+          //   </>
+          // );
         } else {
           return (
-            showSelector && !gameOver && 
-            <Selector
-              style={styleSelector}
-              style2={style2}
-              className={styles.box}
-              setOption={setOption}
-              setShowSelector={setShowSelector}
-              settingid={setting.settingid}
-              foundCharsIds={foundCharsIds}
-              foundCharactersCoords={foundCharactersCoords}
-              coordx={coordx}
-              coordy={coordy}
-            />
+            showSelector &&
+            !gameOver && (
+              <Selector
+                style={styleSelector}
+                style2={style2}
+                className={styles.box}
+                setOption={setOption}
+                setShowSelector={setShowSelector}
+                settingid={setting.settingid}
+                foundCharsIds={foundCharsIds}
+                foundCharactersCoords={foundCharactersCoords}
+                coordx={coordx}
+                coordy={coordy}
+              />
+            )
           );
         }
       })()}
